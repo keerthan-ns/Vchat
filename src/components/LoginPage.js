@@ -26,13 +26,13 @@ class LoginPage extends Component {
         return (
             <div>
                 <Grid container>
-                    <Grid item xs={3}></Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={3} id="firstgrid"></Grid>
+                    <Grid item xs={6} id="maingrid">
                         <div className="loginpage__main">
-                            <div>
+                            <div id="mobile">
                                 <img src={inst_image} width="454px" alt="Android/IOS"/>
                             </div>
-                            <div>
+                            <div id="form_div">
                                 <div className="loginpage_rightcomponent">
                                     <img className="loginpage__logo" src={insta_logo} alt="Instagram"/>
                                     <div className="loginPage__signin">
@@ -75,7 +75,7 @@ class LoginPage extends Component {
                             </div>
                         </div>
                     </Grid>
-                    <Grid item xs={3}></Grid>
+                    <Grid item xs={3} id="secondgrid"></Grid>
                 </Grid>
             </div>
         );

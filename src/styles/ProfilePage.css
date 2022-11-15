@@ -205,7 +205,8 @@ img {
 
 /* Media Query */
 
-@media screen and (max-width: 40rem) {
+/* @media screen and (max-width: 40rem) { */
+@media only screen and (max-width: 500px) {
     .Profile_profile {
         display: flex;
         flex-wrap: wrap;
