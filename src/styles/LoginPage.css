@@ -85,15 +85,16 @@ body {
 }
 .loginPage__downloadSection {
     height: 105px;
-    width: 350px;
+    width: 320px;
     text-align: center;
     margin-top: 20px;
 }
 .loginPage__option {
     margin-top: 20px;
+    display: flex;
 }
 .loginPage_dwimg {
-    margin: 5px;
+    margin: 0 auto ;
 }
 
 @media screen and (max-width : 500px) {
