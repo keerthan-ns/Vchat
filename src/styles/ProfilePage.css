@@ -1,0 +1,364 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Open Sans", Arial, sans-serif;
+    min-height: 100vh;
+    background-color: #fafafa;
+    color: #262626;
+    padding-bottom: 3rem;
+}
+
+img {
+    display: block;
+}
+
+.Profile_container {
+    max-width: 93.5rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.Profile_btn {
+    display: inline-block;
+    font: inherit;
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0;
+    cursor: pointer;
+}
+
+.Profile_btn:focus {
+    outline: 0.5rem auto #4d90fe;
+}
+
+.Profile_visually-hidden {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+/* Profile Section */
+
+.Profile_profile {
+    padding: 5rem 0;
+}
+
+.Profile_profile::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.Profile_profile-image {
+    float: left;
+    width: calc(33.333% - 1rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 3rem;
+}
+
+.Profile_profile-image img {
+    border-radius: 50%;
+}
+
+.Profile_profile-user-settings,
+.Profile_profile-stats,
+.Profile_profile-bio {
+    float: left;
+    width: calc(66.666% - 2rem);
+}
+
+.Profile_profile-user-settings {
+    margin-top: 1.1rem;
+}
+
+.Profile_profile-user-name {
+    display: inline-block;
+    font-size: 1.75rem;
+    font-weight: 300;
+}
+
+.Profile_profile-edit-btn {
+    font-size: 0.875rem;
+    line-height: 1.8;
+    border: 0.1rem solid #dbdbdb;
+    border-radius: 0.3rem;
+    padding: 0 2.4rem;
+    margin-left: 2rem;
+}
+
+.Profile_profile-settings-btn {
+    font-size: 2rem;
+    margin-left: 1rem;
+}
+
+.Profile_profile-stats {
+    margin-top: 2.3rem;
+}
+
+.Profile_profile-stats li {
+    display: inline-block;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-right: 4rem;
+    cursor: pointer;
+}
+
+.Profile_profile-stats li:last-of-type {
+    margin-right: 0;
+}
+
+.Profile_profile-bio {
+    font-size: 1.0rem;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-top: 2.3rem;
+}
+
+.Profile_profile-real-name,
+.Profile_profile-stat-count,
+.Profile_profile-edit-btn {
+    font-weight: 600;
+}
+
+/* Gallery Section */
+
+.Profile_gallery {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -1rem -1rem;
+    padding-bottom: 3rem;
+}
+
+.Profile_gallery-item {
+    position: relative;
+    flex: 1 0 22rem;
+    margin: 1rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.Profile_gallery-item:hover .Profile_gallery-item-info,
+.Profile_gallery-item:focus .Profile_gallery-item-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    width: 80%;
+    height: 80%;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.Profile_gallery-item-info {
+    display: none;
+}
+
+.Profile_gallery-item-info li {
+    display: inline-block;
+    font-size: 1.7rem;
+    font-weight: 600;
+}
+
+.Profile_gallery-item-likes {
+    margin-right: 2.2rem;
+}
+
+.Profile_gallery-item-type {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2.5rem;
+    text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
+}
+
+.fa-clone,
+.fa-comment {
+    transform: rotateY(180deg);
+}
+
+.Profile_gallery-image {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+}
+
+/* Loader */
+
+/* .loader {
+    width: 5rem;
+    height: 5rem;
+    border: 0.6rem solid #999;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    margin: 0 auto;
+    animation: loader 500ms linear infinite;
+} */
+
+/* Media Query */
+
+@media screen and (max-width: 40rem) {
+    .Profile_profile {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 4rem 0;
+    }
+
+    .Profile_profile::after {
+        display: none;
+    }
+
+    .Profile_profile-image,
+    .Profile_profile-user-settings,
+    .Profile_profile-bio,
+    .Profile_profile-stats {
+        float: none;
+        width: auto;
+    }
+
+    .Profile_profile-image img {
+        margin-top: 20px;
+        width: 7.7rem;
+    }
+
+    .Profile_profile-user-settings {
+        flex-basis: calc(100% - 10.7rem);
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+    }
+
+    .Profile_profile-user-name {
+        font-size: 1.2rem;
+    }
+
+    .Profile_profile-edit-btn {
+        order: 1;
+        padding: 0;
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    .Profile_profile-edit-btn {
+        margin-left: 0;
+    }
+
+    .Profile_profile-bio {
+        font-size: 1.0rem;
+        margin-top: 1.5rem;
+    }
+
+    .Profile_profile-edit-btn,
+    .Profile_profile-bio,
+    .Profile_profile-stats {
+        flex-basis: 100%;
+    }
+
+    .Profile_profile-stats {
+        order: 1;
+        margin-top: 0.5rem;
+    }
+
+    .Profile_profile-stats ul {
+        display: flex;
+        text-align: center;
+        padding: 1.2rem 0;
+        border-top: 0.1rem solid #dadada;
+        border-bottom: 0.1rem solid #dadada;
+    }
+
+    .Profile_profile-stats li {
+        font-size: 1.0rem;
+        flex: 1;
+        margin: 0;
+    }
+
+    .Profile_profile-stat-count {
+        display: block;
+    }
+}
+
+/* Spinner Animation */
+
+@keyframes loader {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/*
+
+The following code will only run if your browser supports CSS grid.
+
+Remove or comment-out the code block below to see how the browser will fall-back to flexbox & floated styling. 
+
+*/
+
+@supports (display: grid) {
+    .Profile_profile {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: repeat(3, auto);
+        grid-column-gap: 3rem;
+        align-items: center;
+    }
+
+    .Profile_profile-image {
+        grid-row: 1 / -1;
+    }
+
+    .Profile_gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+        grid-gap: 2rem;
+    }
+
+    .Profile_profile-image,
+    .Profile_profile-user-settings,
+    .Profile_profile-stats,
+    .Profile_profile-bio,
+    .Profile_gallery-item,
+    .Profile_gallery {
+        width: auto;
+        margin: 0;
+    }
+
+    @media (max-width: 40rem) {
+        .Profile_profile {
+            grid-template-columns: auto 1fr;
+            grid-row-gap: 1.5rem;
+        }
+
+        .Profile_profile-image {
+            grid-row: 1 / 2;
+        }
+
+        .Profile_profile-user-settings {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            grid-gap: 1rem;
+        }
+
+        .Profile_profile-edit-btn,
+        .Profile_profile-stats,
+        .Profile_profile-bio {
+            grid-column: 1 / -1;
+        }
+
+        .Profile_profile-user-settings,
+        .Profile_profile-edit-btn,
+        .Profile_profile-settings-btn,
+        .Profile_profile-bio,
+        .Profile_profile-stats {
+            margin: 0;
+        }
+    }
+}
