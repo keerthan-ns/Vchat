@@ -1,0 +1,29 @@
+$device-width: 1480px;
+.grid {
+    $grid-col-amount: 4;
+    display: grid;
+    grid-template-columns: repeat(#{$grid-col-amount}, 1fr);
+    grid-gap: 10px;
+    &__photo {
+    display: block;
+    width: 100%;
+    height: calc(#{$device-width} / #{$grid-col-amount});
+    background: center / cover no-repeat;    
+    }
+}
+@media only screen and (max-width: 500px) {
+    $device-width: 375px;
+    
+    .grid {
+        $grid-col-amount: 3;
+        display: grid;
+        grid-template-columns: repeat(#{$grid-col-amount}, 1fr);
+        grid-gap: 1px;
+        &__photo {
+        display: block;
+        width: 100%;
+        height: calc(#{$device-width} / #{$grid-col-amount});
+        background: center / cover no-repeat;    
+        }
+    }
+}

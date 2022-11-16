@@ -12,12 +12,35 @@ body {
     padding-bottom: 3rem;
 }
 
-img {
+/* img {
     display: block;
-}
+} */
+.gallery {
+    display: grid;
+    margin-left: 30px;
+    margin-right: 30px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+  }
+  @media only screen and (max-width: 735px) {
+    .gallery {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3px;
+        margin: 0;
+        min-height: calc(375 / 3);
+    }
+  }
+  .gallery-item {
+    position: relative;
+  }
+  .gallery-item img {
+    width: 100%;
+    display: block;
+  }
 
 .Profile_container {
-    max-width: 93.5rem;
+    max-width: 92.5rem;
+    width: 100%;/*might be removed*/
     margin: 0 auto;
     padding: 0 2rem;
 }
@@ -211,6 +234,7 @@ img {
         display: flex;
         flex-wrap: wrap;
         padding: 4rem 0;
+        padding-bottom: 0;
     }
 
     .Profile_profile::after {
@@ -289,11 +313,11 @@ img {
 
 /* Spinner Animation */
 
-@keyframes loader {
+/* @keyframes loader {
     to {
         transform: rotate(360deg);
     }
-}
+} */
 
 /*
 
@@ -332,7 +356,8 @@ Remove or comment-out the code block below to see how the browser will fall-back
         margin: 0;
     }
 
-    @media (max-width: 40rem) {
+    /* @media (max-width: 40rem) { */
+        @media only screen and (max-width: 500px) {
         .Profile_profile {
             grid-template-columns: auto 1fr;
             grid-row-gap: 1.5rem;

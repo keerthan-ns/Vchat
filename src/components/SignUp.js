@@ -15,7 +15,7 @@ class SignUp extends Component {
     render() { 
         return ( 
             <div>
-                <input className="logipage__text" type="text" placeholder="Mobile number or Email" />
+                <input className="logipage__text" type="text" placeholder="Enter Email" />
                 <input className="logipage__text" type="text" placeholder="Full Name" />
                 <input className="logipage__text" type="text" placeholder="Username" />
                 <input className="logipage__text" type="password" placeholder="Password" />
