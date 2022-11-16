@@ -1,24 +1,50 @@
 @import "./variables.scss";
 
+// .stories {
+//   display: flex;
+//   align-content: center;
+//   background-color: $background-white;
+//   border: 1px solid $border-color-grey;
+//   border-radius: 3px;
+//   margin: 2em 0 1.5em 0;
+//   height: 7.4em;
+//   overflow: hidden;
+// }
+.fileupload > input {
+  display: none;
+}
+.statusbar__upload {
+  // margin: 30px 20px 20px 20px;
+  margin: 30px 20px 30px 30px;
+  // margin: 2em 0 1.5em 0;
+}
 .stories {
-  display: flex;
-  align-content: center;
+  /* height: 118px;
+  width: 614px; */
+  
   background-color: $background-white;
   border: 1px solid $border-color-grey;
+  /* margin-top: 25px; */
+  display: flex;
+  overflow-x: scroll;
+
+  align-content: center;
   border-radius: 3px;
   margin: 2em 0 1.5em 0;
   height: 7.4em;
-  // max-width: 320px;
-  // overflow-x: auto;
-  // overflow-y: hidden;
-  // // flex-wrap: nowrap;
-
-  overflow: hidden;
+  /* overflow: hidden; */
+}
+.stories::-webkit-scrollbar {
+  display: none;
 }
 
 // @media only screen and (max-width: 640px) {
   @media only screen and (max-width: 500px) {
   .stories {
     margin: 0 0 0.5em 0;
+    max-width: 360px;
   }
+  // .statusbar__upload {
+  //   margin: 2 0 2 2;
+  // }
 }

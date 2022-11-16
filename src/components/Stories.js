@@ -1,12 +1,19 @@
 import "../styles/stories.scss";
 import Story from "./Story";
+import uploadimage from "../images/statusadd.png";
 import HorizontalScroll from "react-scroll-horizontal";
 // import HorizontalScroll from "react-horizontal-scrolling";
 
 function Stories() {
   return (
     <div className="stories">
-      <HorizontalScroll className="scroll" reverseScroll={true}>
+        <div className="fileupload">
+            <label for="file-upload-status" >
+                <img className="statusbar__upload" src={uploadimage} width="55px" height="55px" alt="" />
+            </label>
+                <input id="file-upload-status" type="file"/>
+        </div>
+      {/* <HorizontalScroll className="scroll" reverseScroll={true}> */}
         <Story />
         <Story />
         <Story />
@@ -23,7 +30,7 @@ function Stories() {
         <Story />
         <Story />
         <Story />
-      </HorizontalScroll>
+      {/* </HorizontalScroll> */}
     </div>
   );
 }

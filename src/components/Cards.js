@@ -38,35 +38,36 @@ function Cards() {
   ];
 
   return (
-    <div className="cards">
-      <Stories />
-
-      <Card
-        accountName="rafagrassetti"
-        storyBorder={true}
-        image="https://picsum.photos/800/900"
-        comments={commentsOne}
-        likedByText="dadatlacak"
-        likedByNumber={89}
-        hours={16}
-      />
-      <Card
-        accountName="mapvault"
-        image="https://picsum.photos/800"
-        comments={commentsTwo}
-        likedByText="therealadamsavage"
-        likedByNumber={47}
-        hours={12}
-      />
-      <Card
-        accountName="dadatlacak"
-        storyBorder={true}
-        image="https://picsum.photos/800/1000"
-        comments={commentsThree}
-        likedByText="mapvault"
-        likedByNumber={90}
-        hours={4}
-      />
+    <div>
+      <div className="cards">
+        <Stories />
+        <Card
+          accountName="rafagrassetti"
+          storyBorder={true}
+          image="https://picsum.photos/800/900"
+          comments={commentsOne}
+          likedByText="dadatlacak"
+          likedByNumber={89}
+          hours={16}
+        />
+        <Card
+          accountName="mapvault"
+          image="https://picsum.photos/800"
+          comments={commentsTwo}
+          likedByText="therealadamsavage"
+          likedByNumber={47}
+          hours={12}
+        />
+        <Card
+          accountName="dadatlacak"
+          storyBorder={true}
+          image="https://picsum.photos/800/1000"
+          comments={commentsThree}
+          likedByText="mapvault"
+          likedByNumber={90}
+          hours={4}
+        />
+      </div>
     </div>
   );
 }
