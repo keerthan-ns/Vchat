@@ -1,7 +1,38 @@
+@import "./variables.scss";
 .cards {
   width: 600px;
 }
+.uploadicon {
+  margin: auto 0;
+  height: 80px;
+  width: 80px;
+}
 
+.fileupload > input {
+  display: none;
+}
+.file_container {
+  text-align: center;
+  margin: 0px 10px 0px 0px;
+  display :flex ;
+  justify-content: center ;
+}   
+.caption {
+  outline: 0;
+  border-width: 0 0 1px;
+  border-color: solid $border-color-grey;
+  background-color: $background-grey;
+  margin: auto 0;
+  min-width: 225px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $font-color-secondary;
+  font-size: 0.85em;
+  font-weight: 100;
+  font: $font;
+  // padding-left: 10px;
+}
 @media only screen and (max-width: 600px) {
   .cards {
     width: 100%;

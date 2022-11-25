@@ -13,6 +13,11 @@
   }
 
   .profileIcon {
-    margin-top: -3px;
+    margin-top: -1px;
+
+    &.small {
+      width: 35px;
+      height: 35px;
+    }
   }
 }

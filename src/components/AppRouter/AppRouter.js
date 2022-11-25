@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from '../HomePage';
 import LoginPage from '../LoginPage';
+import Notifications from '../Notifications';
 import ProfilePage from '../ProfilePage';
-import NavBar from '../Navigation';
 
 
 function AppRouter() {
@@ -12,9 +12,11 @@ function AppRouter() {
     <Router>
       {/* <NavBar/> */}
         <Routes>
-            <Route path="/" element={<Home/>}/>
-            <Route path="/profile" element={<ProfilePage/>}/>
+            <Route path="/" element={<LoginPage/>}/>
             <Route path="/login" element={<LoginPage/>}/>
+            <Route path="/notifications" element={<Notifications/>}/>
+            <Route path="/home" element={<Home/>}/>
+            <Route path="/profile" element={<ProfilePage/>}/>
         </Routes>
     </Router>
   )

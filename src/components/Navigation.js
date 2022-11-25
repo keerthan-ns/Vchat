@@ -2,6 +2,7 @@ import "../styles/navigation.scss";
 import Menu from "./Menu";
 import logo from "../images/vchatLogo.png";
 
+
 function Navigation() {
   return (
     <div className="navigation">

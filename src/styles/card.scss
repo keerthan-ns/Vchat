@@ -28,6 +28,7 @@
   .cardImage {
     width: 100%;
     display: block;
+    background: radial-gradient(circle, rgba(255,255,255,0.32174366328562676) 0%, rgba(122,117,117,0.6830882011007529) 100%);
   }
 
   .likedBy {
@@ -35,9 +36,9 @@
     padding-left: 1em;
 
     span {
-      font-size: 0.75em;
-      margin-left: 0.5em;
-      padding-top: 0.5em;
+      font-size: 0.80em;
+      // margin-left: 0.5em;
+      padding-bottom: 0.5em;
     }
   }
 

@@ -1,25 +1,46 @@
-import React, { Component } from 'react';
+
+import React from 'react';
 import "../styles/LoginPage.css";
+import toast,{Toaster} from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
-class SignIN extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
-            emailId : null,
-            password: null
-         }
-    }
+const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 
-    render() { 
-        return ( 
-        <div>
-             <input className="logipage__text" onChange={(event)=>{this.state.emailId=event.currentTarget.value}} type="text" placeholder="Username, or email" />
-             <input className="logipage__text" onChange={(event)=>{this.state.password=event.currentTarget.value}}  type="password" placeholder="Password" />
-             <a href="/"><button className="login__button" onClick={this.login}>Log In</button></a>
-             {/* <button className="login__button" onClick={'/'}>Log In</button> */}
-        </div> 
-    );
+function SignIn() {
+    const navigate = useNavigate();
+    const sendLoginRequest=()=>{
+        //send user name and password by post request
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", BASE_URL + "login/", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("username=" + username + "&password=" + password);
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                console.log(response);          //response from server
+                response = JSON.parse(response);        //contains 'status' and 'message'
+                if(response.status === "success"){
+                    toast.success(response.message);
+                    localStorage.setItem("users",JSON.stringify(username));
+                    navigate('/home');
+                    
+                }
+                else{
+                    toast.error(response.message);
+                }
+            }
+        }
     }
+  return (
+    <>
+        <Toaster/>
+        <input className="logipage__text" type="text" placeholder="Username, or email" id="username" />
+        <input className="logipage__text" type="password" placeholder="Password" id="password"/>
+        <button className="login__button" onClick={sendLoginRequest}>Log In</button>
+    </>
+  )
 }
- 
-export default SignIN;
+
+export default SignIn

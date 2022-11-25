@@ -90,6 +90,10 @@ body {
 
 .Profile_profile-image img {
     border-radius: 50%;
+    min-width: 152px;
+    min-height: 152px;
+    max-width: 152px;
+    max-height: 152px;
 }
 
 .Profile_profile-user-settings,
@@ -112,15 +116,20 @@ body {
 .Profile_profile-edit-btn {
     font-size: 0.875rem;
     line-height: 1.8;
-    border: 0.1rem solid #dbdbdb;
+    border: 0.1rem solid #2766ed;
     border-radius: 0.3rem;
     padding: 0 2.4rem;
     margin-left: 2rem;
 }
 
-.Profile_profile-settings-btn {
+.Profile_profile-logout-btn {
     font-size: 2rem;
     margin-left: 1rem;
+    background-image: url(../images/logout2.png) ;
+    background-size: 100%;
+    background-repeat: none;
+    width: 22px;
+    height: 22px;
 }
 
 .Profile_profile-stats {
@@ -252,6 +261,10 @@ body {
     .Profile_profile-image img {
         margin-top: 20px;
         width: 7.7rem;
+        min-width: 123.2px;
+        min-height: 123.2px;
+        max-width: 123.2px;
+        max-height: 123.2px;
     }
 
     .Profile_profile-user-settings {
@@ -381,10 +394,15 @@ Remove or comment-out the code block below to see how the browser will fall-back
 
         .Profile_profile-user-settings,
         .Profile_profile-edit-btn,
-        .Profile_profile-settings-btn,
+        .Profile_profile-logout-btn,
         .Profile_profile-bio,
         .Profile_profile-stats {
             margin: 0;
+        }
+        .Profile_profile-logout-btn{
+            margin-top: 10px;
+            /* background-size: 100%;
+            height: 20px; */
         }
     }
 }

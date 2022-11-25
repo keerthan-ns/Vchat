@@ -1,395 +1,403 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from "react";
 import "../styles/ProfilePage.css";
 import "../styles/ProfilePage.scss";
 import NavBar from './Navigation';
+import toast,{Toaster} from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 
-export default class ProfilePage extends Component {
-  render() {
+const BASE_URL = process.env.REACT_APP_DJANGO_URL;
+
+function ProfilePage() {
+
+    const [profile,setProfile] = useState([]);
+    const [myposts,setMypost] = useState([]);
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const [checked, setChecked] = useState(false);
+
+    const switchHandler = (event) => {
+        setChecked(event.target.checked);
+        if(event.target.checked){
+            change_to_private();
+            
+        }
+        else{
+            change_to_public();
+            
+        }
+    };
+    const navigate = useNavigate();
+    function change_to_private(){
+        //change to private
+        var username = localStorage.getItem("users").replaceAll('"','');
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", BASE_URL + "change_to_private/", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("username=" + username);
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                console.log(response);          //response from server
+                response = JSON.parse(response);        
+                if(response.status === "success"){
+                    profile.type = 'private';
+                    toast.success("Your account is now private");  
+                    handleClose();
+                }
+                else{
+                    toast.error("Failed to update");
+                }
+            }
+        }
+    }
+
+    function change_to_public(){
+        //change to public
+        var username = localStorage.getItem("users").replaceAll('"','');
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", BASE_URL + "change_to_public/", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("username=" + username);
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                console.log(response);          //response from server
+                response = JSON.parse(response); 
+                if(response.status === "success"){
+                    profile.type = 'public';
+                    toast.success("Your account is now public");
+                    handleClose();  
+                }
+                else{
+                    toast.error("Failed to update");
+                }
+            }
+        }
+    }
+
+    function get_profile(){
+        //get profile
+        var username = localStorage.getItem("users").replaceAll('"','');
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", BASE_URL + "fetch_profile/", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("username=" + username);
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                // console.log(response);          //response from server
+                // ***** for profile pic use get_image() function *****
+                response = JSON.parse(response); 
+                console.log(response);
+                get_image(response.username,"profileDP",response.imagePath);
+                setProfile(response);
+                setChecked(response.type==='private' ? true : false)
+                getmyposts();
+            }
+        }
+    }
+    function get_image(uname,cid,image_pathh){
+        //get image
+        var username = localStorage.getItem("users").replaceAll('"','');
+        // var username = "test2";
+        // var image_path = document.getElementById("image_path").value;
+        // console.log(uname+" "+username);
+        console.log(image_pathh);
+        var image_path = image_pathh;
+        var image_extension = image_pathh.split('.').pop();
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", BASE_URL + "get_image/", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.overrideMimeType('text/plain; charset=x-user-defined');                 //added line: for binary data
+        xhr.send("username=" + username + "&imagePath=" + image_path);
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // // var response = xhr.responseText;
+                var binary = "";
+                var responseText = xhr.responseText;
+                var responseTextLen = responseText.length;
+    
+                for (let i = 0; i < responseTextLen; i++ ) {
+                    binary += String.fromCharCode(responseText.charCodeAt(i) & 255);
+                }
+                var image_source = 'data:image/' + image_extension + ';base64,' + btoa(binary);
+    
+                // console.log(image_source);          //response from server
+                document.getElementById(cid).src = image_source;       //for displaying image
+                // return image_source;
+    
+            }
+        }
+      }
+
+    const sendLogoutRequest=()=>{
+        //send logout request
+        //   var username = document.getElementById("username").value;
+          var username = localStorage.getItem("users").replaceAll('"','');
+        //   var username = "test2";
+        //   var username = uname.toString;
+        //   console.log(typeof username);
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", BASE_URL + "logout/", true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        //   console.log("username=" + username); 
+          xhr.send("username=" + username);
+          xhr.onreadystatechange = function(){
+              if (xhr.readyState === 4 && xhr.status === 200) {
+                  var response = xhr.responseText;
+                  console.log(response);          //response from server
+                  response = JSON.parse(response);
+                  if(response.status === "success"){
+                      localStorage.clear();
+                      navigate('/');
+                      toast.success(response.message);
+                    
+                }
+                else{
+                    toast.error(response.message);
+                }        
+              }
+          }
+      }
+
+      function update_bio(){
+        //update bio
+        var username = localStorage.getItem("users").replaceAll('"','');
+        var bio = document.getElementById("bio").value;
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", BASE_URL + "update_bio/", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("username=" + username + "&bio=" + bio);
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                console.log(response);          //response from server
+                response = JSON.parse(response);        //contains 'status' and 'message'
+                if(response.status === "success"){
+                    toast.success("Bio updated successfully");
+                    profile.bio = bio;
+                    handleClose();
+                    // navigate('/profile');
+                }
+                else{
+                    toast.error("Failed to update");
+                }
+            }
+        }
+     }
+
+     function update_profile_pic(){
+        //update profile pic
+        var username = localStorage.getItem("users").replaceAll('"','');
+        var formData = new FormData();
+        formData.append("username", username);
+        formData.append("image", document.getElementById("uploadDP").files[0]);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", BASE_URL + "update_profile_pic/", true);
+        xhr.send(formData);
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                console.log(response);          //response from server
+                response = JSON.parse(response); 
+                if(response.status === "success"){
+                    toast.success("DP updated successfully");
+                    window.location.reload();
+                    // setProfile(prevState => ({ profile: prevState.profile.map(el => (
+                    //     el.document.getElementById('profileid').value ===? { ...el,imagePath } : el)) 
+                    // }))
+                }
+                else{
+                    toast.error("Failed to update");
+                }
+            }
+        }
+    }
+
+    function getmyposts(){
+        //get top 10 posts of user
+        var username = localStorage.getItem("users").replaceAll('"','');
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", BASE_URL + "fetch_my_posts/", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("username=" + username);
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                console.log(response);          //response from server
+                // ****** for getting image use get_image function ******
+                response = JSON.parse(response); 
+                setMypost(response);
+                // console.log(myposts);
+            }
+        }
+    }
+
+      useEffect(() => {
+        get_profile();
+        
+      },[]);
+    
     return (
-        <div>
-        {/* <Grid container>
-            <Grid item xs={1}></Grid>
-            <Grid item xs={10}> */}
+        <>
+            <Toaster/>
             <NavBar/>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Cutomise your profile</DialogTitle>
+                <DialogContent>
+                    <div>
+                        <input style={{ display: 'none' }} accept="image/*" id={'uploadDP'} type="file" />
+                        <label htmlFor={'uploadDP'}>
+                            <Button component="span" size="small" style={{color:'blueviolet',border:'0.1rem  solid darkblue'}}>Select a photo</Button>
+                        </label>
+                        <Button component="span" size="small" style={{backgroundColor:'blueviolet',color:'white',float:"right"}} onClick={update_profile_pic}>Upload</Button>
+                    </div>
+                    <hr/>
+                    <div>
+                        <TextField autoFocus margin="dense" id="bio" label="Edit your bio here" fullWidth variant="standard" />
+                        <Button component="span" size="small" style={{color:'blueviolet'}} onClick={update_bio}>Update bio</Button>
+                    </div>
+                    <hr/>
+                    <div>
+                        <FormControlLabel control={<Switch checked={checked} onChange={switchHandler}/>} label={profile.type} />
+                    </div>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    {/* <Button onClick={sendpost}>Update</Button> */}
+                </DialogActions>
+            </Dialog>
                 <header>
+                    <input type='text' value={profile._id} id="profileid" hidden/>
                     <div className="Profile_container">
                         <div className="Profile_profile">
                             <div className="Profile_profile-image">
-                                <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt=""/>
+                                <img src="" alt="" id="profileDP" style={{border:'3px solid darkblue'}}/>
                             </div>
                             <div className="Profile_profile-user-settings">
-                                <h1 className="Profile_profile-user-name">janedoe_</h1>
-                                <button className="Profile_btn Profile_profile-edit-btn">Edit Profile</button>
-                                <button className="Profile_btn Profile_profile-settings-btn" aria-label="profile settings"><i className="fas fa-cog" aria-hidden="true"></i></button>
+                                <h1 className="Profile_profile-user-name">{profile.username}</h1>
+                                <button className="Profile_btn Profile_profile-edit-btn" onClick={handleClickOpen}>Edit Profile</button>
+                                {/* <a href="https://www.flaticon.com/free-icons/logout" title="logout icons">Logout icons created by Pixel perfect - Flaticon</a> */}
+                                <button className="Profile_btn Profile_profile-logout-btn" onClick={sendLogoutRequest} alt="Logout"></button>
                             </div>
                             <div className="Profile_profile-stats">
                                 <ul>
-                                    <li><span className="Profile_profile-stat-count">164</span> posts</li>
-                                    <li><span className="Profile_profile-stat-count">188</span> followers</li>
-                                    <li><span className="Profile_profile-stat-count">206</span> following</li>
+                                    <li><span className="Profile_profile-stat-count">{profile.posts_count}</span> posts</li>
+                                    <li><span className="Profile_profile-stat-count">{profile.follower_count}</span> followers</li>
+                                    <li><span className="Profile_profile-stat-count">{profile.following_count}</span> following</li>
                                 </ul>
                             </div>
                             <div className="Profile_profile-bio">
-                                <p><span className="Profile_profile-real-name">Jane Doe</span><br/> Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
+                                <p><span className="Profile_profile-real-name">{profile.fullname}</span><br/> {profile.bio}</p>
                             </div>
                         </div>
                     </div>
                 </header>
-                {/* <div  className="gallery">
-                    <div  className="gallery-item">
-                        <img alt="gallery-post" src="https://images.unsplash.com/photo-1548032885-b5e38734688a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" />
-                    </div>
-                    <div  className="gallery-item">
-                        <img alt="gallery-post" src="https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" />
-                    </div>
-                    <div  className="gallery-item">
-                        <img alt="gallery-post" src="https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" />
-                    </div>
-                    <div  className="gallery-item">
-                        <img alt="gallery-post" src="https://images.unsplash.com/photo-1501426026826-31c667bdf23d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" />
-                    </div>
-                    <div  className="gallery-item">
-                        <img alt="gallery-post" src="https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" />
-                    </div>
-                    <div  className="gallery-item">
-                        <img alt="gallery-post" src="https://images.unsplash.com/photo-1507041957456-9c397ce39c97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" />
-                    </div>
-                </div> */}
                 
                 <section className="grid">
-                    <div>
-                        <img className='grid__photo' src='https://images.unsplash.com/photo-1548032885-b5e38734688a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'/>
-                        {/* <div className="Profile_item-info">
-                            <ul>
-                                <li className="Profile_item-likes"><span className="Profile_visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> 38</li>
-                            </ul>
-                        </div> */}
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1501426026826-31c667bdf23d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1507041957456-9c397ce39c97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1519821172144-4f87d85de2a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1509233725247-49e657c54213?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1520454974749-611b7248ffdb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1414609245224-afa02bfb3fda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1504681869696-d977211a5f4c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1522083165195-3424ed129620?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1470219556762-1771e7f9427d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1523374228107-6e44bd2b524e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1516893842880-5d8aada7ac05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1505761671935-60b3a7427bad?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1539108826694-1297410cdda9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1529690982439-df5e60eb5a3f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1491056792553-4704d261e3ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1562138888-3d0a63b21dcf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1568641134257-ab85695f67e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1545385095-f5a14a9160d1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1547462713-a208daf9d997?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1522586217274-9096ee38a805?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo'/>
-                    </div>   
-                </section>
-                {/* <main>
-                    <div className="Profile_container">
-                        <div className="Profile_gallery">
-                            <div className="Profile_gallery-item" tabindex="0">
-                                <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" className="Profile_gallery-image" alt=""/>
-                                <div className="Profile_gallery-item-info">
-                                    <ul>
-                                        <li className="Profile_gallery-item-likes"><span className="Profile_visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> 56</li>
-                                        <li className="Profile_gallery-item-comments"><span className="Profile_visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 2</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="Profile_gallery-item" tabindex="0">
-                                <img src="https://images.unsplash.com/photo-1497445462247-4330a224fdb1?w=500&h=500&fit=crop" className="Profile_gallery-image" alt=""/>
-                                <div className="Profile_gallery-item-info">
-                                    <ul>
-                                        <li className="Profile_gallery-item-likes"><span className="Profile_visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> 89</li>
-                                        <li className="Profile_gallery-item-comments"><span className="Profile_visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 5</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="Profile_gallery-item" tabindex="0">
-                                <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=500&h=500&fit=crop" className="Profile_gallery-image" alt=""/>
-                                <div className="Profile_gallery-item-type">
-                                    <span className="Profile_visually-hidden">Gallery</span><i className="fas fa-clone" aria-hidden="true"></i>
-                                </div>
-                                <div className="Profile_gallery-item-info">
-                                    <ul>
-                                        <li className="Profile_gallery-item-likes"><span className="Profile_visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> 42</li>
-                                        <li className="Profile_gallery-item-comments"><span className="Profile_visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 1</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="Profile_gallery-item" tabindex="0">
-                                <img src="https://images.unsplash.com/photo-1502630859934-b3b41d18206c?w=500&h=500&fit=crop" className="Profile_gallery-image" alt=""/>
-                                <div className="Profile_gallery-item-type">
-                                    <span className="Profile_visually-hidden">Video</span><i className="fas fa-video" aria-hidden="true"></i>
-                                </div>
-                                <div className="Profile_gallery-item-info">
-                                    <ul>
-                                        <li className="Profile_gallery-item-likes"><span className="Profile_visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> 38</li>
-                                        <li className="Profile_gallery-item-comments"><span className="Profile_visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 0</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="Profile_gallery-item" tabindex="0">
-                                <img src="https://images.unsplash.com/photo-1498471731312-b6d2b8280c61?w=500&h=500&fit=crop" className="Profile_gallery-image" alt=""/>
-                                <div className="Profile_gallery-item-type">
-                                    <span className="Profile_visually-hidden">Gallery</span><i className="fas fa-clone" aria-hidden="true"></i>
-                                </div>
-                                <div className="Profile_gallery-item-info">
-                                    <ul>
-                                        <li className="Profile_gallery-item-likes"><span className="Profile_visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> 47</li>
-                                        <li className="Profile_gallery-item-comments"><span className="Profile_visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 1</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="Profile_gallery-item" tabindex="0">
-                                <img src="https://images.unsplash.com/photo-1515023115689-589c33041d3c?w=500&h=500&fit=crop" className="Profile_gallery-image" alt=""/>
-                                <div className="gallery-item-info">
-                                    <ul>
-                                        <li className="Profile_gallery-item-likes"><span className="Profile_visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> 94</li>
-                                        <li className="Profile_gallery-item-comments"><span className="Profile_visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 3</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="Profile_gallery-item" tabindex="0">
-                                <img src="https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=500&h=500&fit=crop" className="Profile_gallery-image" alt=""/>
-                                <div className="Profile_gallery-item-type">
-                                    <span className="Profile_visually-hidden">Gallery</span><i className="fas fa-clone" aria-hidden="true"></i>
-                                </div>
-                                <div className="Profile_gallery-item-info">
-                                    <ul>
-                                        <li className="Profile_gallery-item-likes"><span className="Profile_visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> 52</li>
-                                        <li className="Profile_gallery-item-comments"><span className="Profile_visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 4</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="Profile_gallery-item" tabindex="0">
-                                <img src="https://images.unsplash.com/photo-1515814472071-4d632dbc5d4a?w=500&h=500&fit=crop" className="Profile_gallery-image" alt=""/>
-                                <div className="Profile_gallery-item-info">
-                                    <ul>
-                                        <li className="Profile_gallery-item-likes"><span className="Profile_visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> 66</li>
-                                        <li className="Profile_gallery-item-comments"><span className="Profile_visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 2</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="Profile_gallery-item" tabindex="0">
-                                <img src="https://images.unsplash.com/photo-1511407397940-d57f68e81203?w=500&h=500&fit=crop" className="Profile_gallery-image" alt=""/>
-                                <div className="Profile_gallery-item-type">
-                                    <span className="Profile_visually-hidden">Gallery</span><i className="fas fa-clone" aria-hidden="true"></i>
-                                </div>
-                                <div className="Profile_gallery-item-info">
-                                    <ul>
-                                        <li className="Profile_gallery-item-likes"><span className="Profile_visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> 45</li>
-                                        <li className="Profile_gallery-item-comments"><span className="Profile_visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 0</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="Profile_gallery-item" tabindex="0">
-                                <img src="https://images.unsplash.com/photo-1518481612222-68bbe828ecd1?w=500&h=500&fit=crop" className="Profile_gallery-image" alt=""/>
-                                <div className="Profile_gallery-item-info">
-                                    <ul>
-                                        <li className="Profile_gallery-item-likes"><span className="visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> 34</li>
-                                        <li className="Profile_gallery-item-comments"><span className="visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 1</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="Profile_gallery-item" tabindex="0">
-                                <img src="https://images.unsplash.com/photo-1505058707965-09a4469a87e4?w=500&h=500&fit=crop" className="Profile_gallery-image" alt=""/>
-                                <div className="Profile_gallery-item-info">
-                                    <ul>
-                                        <li className="Profile_gallery-item-likes"><span className="visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> 41</li>
-                                        <li className="Profile_gallery-item-comments"><span className="visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 0</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="Profile_gallery-item" tabindex="0">
-                                <img src="https://images.unsplash.com/photo-1423012373122-fff0a5d28cc9?w=500&h=500&fit=crop" className="Profile_gallery-image" alt=""/>
-                                <div className="Profile_gallery-item-type">
-                                    <span className="visually-hidden">Video</span><i className="fas fa-video" aria-hidden="true"></i>
-                                </div>
-                                <div className="Profile_gallery-item-info">
-                                    <ul>
-                                        <li className="Profile_gallery-item-likes"><span className="visually-hidden">Likes:</span><i className="fas fa-heart" aria-hidden="true"></i> 30</li>
-                                        <li className="Profile_gallery-item-comments"><span className="visually-hidden">Comments:</span><i className="fas fa-comment" aria-hidden="true"></i> 2</li>
-                                    </ul>
-                                </div>
-                            </div>
+                {
+                    myposts?.map((item,index)=>(
+                        <div key={(item._id).toString()}>
+                            <img id={item._id} src={get_image(profile.username,item._id,item.imagePath)} className='grid__photo' alt="" />
                         </div>
+                    ))
+                }
+                    {/* <div>
+                        <img src='https://images.unsplash.com/photo-1548032885-b5e38734688a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
                     </div>
-                </main> */}
-                {/* <main claasName="Profile_supermain">
-                    <div className="Profile_maindiv">
-                        <article className="Profile_article">
-                            <div>
-                                <div className="Profile_flexstyle">
-                                    <div className="Profile_imgholder">
-
-                                        <div className="Profile_imgdiv">
-                                            <div className="Profile_div1">
-                                                <div className="Profile_div2">
-                                                    <img alt="" className="Profile_img" src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop"/>
-                                                </div>
-                                                <div className="Profile_div3">
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        <div className="Profile_imgdiv">
-                                            <div className="Profile_div1">
-                                                <div className="Profile_div2">
-                                                    <img alt="" className="Profile_img" src="https://images.unsplash.com/photo-1497445462247-4330a224fdb1?w=500&h=500&fit=crop"/>
-                                                </div>
-                                                <div className="Profile_div3">
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        <div className="Profile_imgdiv">
-                                            <div className="Profile_div1">
-                                                <div className="Profile_div2">
-                                                    <img alt="" className="Profile_img" src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=500&h=500&fit=crop"/>
-                                                </div>
-                                                <div className="Profile_div3">
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        <div className="Profile_imgdiv">
-                                            <div className="Profile_div1">
-                                                <div className="Profile_div2">
-                                                    <img alt="" className="Profile_img" src="https://images.unsplash.com/photo-1502630859934-b3b41d18206c?w=500&h=500&fit=crop"/>
-                                                </div>
-                                                <div className="Profile_div3">
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        <div className="Profile_imgdiv">
-                                            <div className="Profile_div1">
-                                                <div className="Profile_div2">
-                                                    <img alt="" className="Profile_img" src="https://images.unsplash.com/photo-1498471731312-b6d2b8280c61?w=500&h=500&fit=crop"/>
-                                                </div>
-                                                <div className="Profile_div3">
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        <div className="Profile_imgdiv">
-                                            <div className="Profile_div1">
-                                                <div className="Profile_div2">
-                                                    <img alt="" className="Profile_img" src="https://images.unsplash.com/photo-1515023115689-589c33041d3c?w=500&h=500&fit=crop"/>
-                                                </div>
-                                                <div className="Profile_div3">
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        <div className="Profile_imgdiv">
-                                            <div className="Profile_div1">
-                                                <div className="Profile_div2">
-                                                    <img alt="" className="Profile_img" src="https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=500&h=500&fit=crop"/>
-                                                </div>
-                                                <div className="Profile_div3">
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        <div className="Profile_imgdiv">
-                                            <div className="Profile_div1">
-                                                <div className="Profile_div2">
-                                                    <img alt="" className="Profile_img" src="https://images.unsplash.com/photo-1515814472071-4d632dbc5d4a?w=500&h=500&fit=crop"/>
-                                                </div>
-                                                <div className="Profile_div3">
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        <div className="Profile_imgdiv">
-                                            <div className="Profile_div1">
-                                                <div className="Profile_div2">
-                                                    <img alt="" className="Profile_img" src="https://images.unsplash.com/photo-1511407397940-d57f68e81203?w=500&h=500&fit=crop"/>
-                                                </div>
-                                                <div className="Profile_div3">
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        <div className="Profile_imgdiv">
-                                            <div className="Profile_div1">
-                                                <div className="Profile_div2">
-                                                    <img alt="" className="Profile_img" src="https://images.unsplash.com/photo-1518481612222-68bbe828ecd1?w=500&h=500&fit=crop"/>
-                                                </div>
-                                                <div className="Profile_div3">
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        <div className="Profile_imgdiv">
-                                            <div className="Profile_div1">
-                                                <div className="Profile_div2">
-                                                    <img alt="" className="Profile_img" src="https://images.unsplash.com/photo-1505058707965-09a4469a87e4?w=500&h=500&fit=crop"/>
-                                                </div>
-                                                <div className="Profile_div3">
-                                                </div>
-                                            </div>
-                                        </div>     
-                                        https://images.unsplash.com/photo-1423012373122-fff0a5d28cc9?w=500&h=500&fit=crop
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
                     </div>
-                </main> */}
-        </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1501426026826-31c667bdf23d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1507041957456-9c397ce39c97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1519821172144-4f87d85de2a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1509233725247-49e657c54213?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1520454974749-611b7248ffdb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1414609245224-afa02bfb3fda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1504681869696-d977211a5f4c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1522083165195-3424ed129620?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1470219556762-1771e7f9427d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1523374228107-6e44bd2b524e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1516893842880-5d8aada7ac05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1505761671935-60b3a7427bad?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1539108826694-1297410cdda9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1529690982439-df5e60eb5a3f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1491056792553-4704d261e3ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1562138888-3d0a63b21dcf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1568641134257-ab85695f67e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1545385095-f5a14a9160d1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1547462713-a208daf9d997?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>
+                    <div>
+                        <img src='https://images.unsplash.com/photo-1522586217274-9096ee38a805?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
+                    </div>    */}
+                </section>
+        </>
     )
-  }
 }
+export default ProfilePage;

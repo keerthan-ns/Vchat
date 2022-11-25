@@ -1,12 +1,35 @@
+import React, { useEffect, useState } from "react";
 import "../styles/suggestions.scss";
 import Profile from "./Profile";
 
+const BASE_URL = process.env.REACT_APP_DJANGO_URL;
+
 function Suggestions() {
+
+  function recommendations(){
+    //get recommendations
+    var username = localStorage.getItem("users").replaceAll('"','');
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", BASE_URL + "recommendations/", true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send("username=" + username);
+    xhr.onreadystatechange = function(){
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = xhr.responseText;
+            console.log(response);          //response from server
+            response = JSON.parse(response);        //contains 'status' and 'message'
+        }
+    }
+  }
+  useEffect(() => {
+    // recommendations();
+  }, []);
+
   return (
     <div className="suggestions">
       <div className="titleContainer">
         <div className="title">Suggestions For You</div>
-        <a href="/">See All</a>
+        {/* <a href="/">See All</a> */}
       </div>
 
       <Profile
@@ -14,7 +37,6 @@ function Suggestions() {
         urlText="Follow"
         iconSize="medium"
         captionSize="small"
-        storyBorder={true}
       />
       <Profile
         caption="Followed by dadatlacak + 1 more"
@@ -33,7 +55,6 @@ function Suggestions() {
         urlText="Follow"
         iconSize="medium"
         captionSize="small"
-        storyBorder={true}
       />
       <Profile
         caption="Followed by mapvault + 4 more"
