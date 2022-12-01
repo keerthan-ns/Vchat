@@ -124,7 +124,7 @@ function Cards() {
         {/* <Card accountName="rafagrassetti" image="https://picsum.photos/800/900" likedByNumber={89} caption="Hello" hours={16} /> */}
         {
             posts?.map((item,index)=>(
-              <Card key={(item._id).toString()} cid={item._id} accountName={item.userId} image={item.imagePath} likedByNumber={item.likes} caption={item.caption} hours={item.postedAt} profileImagePath={item.profileImagePath}/>
+              <Card key={(item._id).toString()} cid={item._id} accountName={item.userId} image={item.imagePath} liked={false} likedByNumber={item.likes} caption={item.caption} hours={item.postedAt} profileImagePath={item.profileImagePath}/>
             ))
         }
         {/* {console.log(posts)} */}

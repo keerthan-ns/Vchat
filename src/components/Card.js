@@ -11,6 +11,7 @@ function Card(props) {
     storyBorder,
     image,
     accountName,
+    liked,
     likedByNumber,
     caption,
     hours,
@@ -57,7 +58,7 @@ function Card(props) {
         {/* <CardButton className="cardButton" /> */}
       </header>
       <img id={cid} className="cardImage" src={get_image(cid,accountName,image)} alt="card content" />
-      <CardMenu />
+      <CardMenu cid={cid} liked={liked}/>
       <div className="likedBy">
         {/* <Profile iconSize="small" hideAccountName={true} /> */}
         <span>
