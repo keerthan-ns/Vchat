@@ -10,6 +10,10 @@ function SignIn() {
     const navigate = useNavigate();
     const sendLoginRequest=()=>{
         //send user name and password by post request
+        // event.currentTarget.disabled = true;
+        
+        document.getElementById("login_btn").disabled = true;
+        document.getElementById("login_btn").style.backgroundColor = "grey";
         var username = document.getElementById("username").value;
         var password = document.getElementById("password").value;
         var xhr = new XMLHttpRequest();
@@ -29,6 +33,8 @@ function SignIn() {
                 }
                 else{
                     toast.error(response.message);
+                    document.getElementById("login_btn").disabled = false;
+                    document.getElementById("login_btn").style.backgroundColor = "#0395F6";
                 }
             }
         }
@@ -38,7 +44,7 @@ function SignIn() {
         <Toaster/>
         <input className="logipage__text" type="text" placeholder="Username, or email" id="username" />
         <input className="logipage__text" type="password" placeholder="Password" id="password"/>
-        <button className="login__button" onClick={sendLoginRequest}>Log In</button>
+        <button className="login__button" id="login_btn" onClick={sendLoginRequest}>Log In</button>
     </>
   )
 }

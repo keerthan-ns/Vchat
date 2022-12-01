@@ -29,6 +29,8 @@ class SignUp extends Component {
             toast('Registering please wait..',
                 {duration:1000}
             );
+            document.getElementById("signin_btn").disabled = true;
+            document.getElementById("signin_btn").style.backgroundColor = "grey";
             var xhr = new XMLHttpRequest();
             xhr.open("POST", BASE_URL + "signup/", true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -44,9 +46,13 @@ class SignUp extends Component {
                         document.getElementById("name").value = "";
                         document.getElementById("userName").value = "";
                         document.getElementById("password").value = "";     
+                        document.getElementById("signin_btn").disabled = false;
+                        document.getElementById("signin_btn").style.backgroundColor = "#0395F6";
                     }
                     else{
                         toast.error(response.message);
+                        document.getElementById("signin_btn").disabled = false;
+                        document.getElementById("signin_btn").style.backgroundColor = "#0395F6";
                     }
                 }
             }
@@ -67,7 +73,7 @@ class SignUp extends Component {
                 <input className="logipage__text" type="text" placeholder="Full Name" id="name" />
                 <input className="logipage__text" type="text" placeholder="Username" id="userName" />
                 <input className="logipage__text" type="password" placeholder="Password" id="password" />
-                <button className="login__button" onClick={this.sendSignupRequest}>Sign up</button>
+                <button className="login__button" onClick={this.sendSignupRequest} id="signin_btn">Sign up</button>
             </>
          );
     }

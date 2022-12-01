@@ -137,6 +137,7 @@ function ProfilePage() {
     
                 // console.log(image_source);          //response from server
                 document.getElementById(cid).src = image_source;       //for displaying image
+                
                 // return image_source;
     
             }
@@ -291,7 +292,7 @@ function ProfilePage() {
                                 <h1 className="Profile_profile-user-name">{profile.username}</h1>
                                 <button className="Profile_btn Profile_profile-edit-btn" onClick={handleClickOpen}>Edit Profile</button>
                                 {/* <a href="https://www.flaticon.com/free-icons/logout" title="logout icons">Logout icons created by Pixel perfect - Flaticon</a> */}
-                                <button className="Profile_btn Profile_profile-logout-btn" onClick={sendLogoutRequest} alt="Logout"></button>
+                                <button className="Profile_btn Profile_profile-logout-btn" onClick={sendLogoutRequest} alt="Logout" ></button>
                             </div>
                             <div className="Profile_profile-stats">
                                 <ul>
