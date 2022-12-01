@@ -25,9 +25,10 @@ $device-width: 1480px;
         grid-gap: 2px;
         &__photo {
         display: block;
+        object-fit: cover;
         width: 100%;
         height: calc(#{$device-width} / #{$grid-col-amount});
-        background: center / cover no-repeat;  
+        // background: center / cover no-repeat;  
         border: 1px solid rgba(118, 112, 112, 0.8);
         }
     }
