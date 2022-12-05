@@ -43,6 +43,7 @@ function Cards() {
             var response = xhr.responseText;
             console.log(response);          //response from server
             response = JSON.parse(response);  
+            console.log(response);
             setPosts(response);
             // posts = response;
             // console.log(posts);
@@ -123,8 +124,8 @@ function Cards() {
         </Dialog>
         {/* <Card accountName="rafagrassetti" image="https://picsum.photos/800/900" likedByNumber={89} caption="Hello" hours={16} /> */}
         {
-            posts?.map((item,index)=>(
-              <Card key={(item._id).toString()} cid={item._id} accountName={item.userId} image={item.imagePath} liked={false} likedByNumber={item.likes} caption={item.caption} hours={item.postedAt} profileImagePath={item.profileImagePath}/>
+            posts?.map((item)=>(
+              <Card key={(item._id).toString()} cid={item._id} accountName={item.userId} image={item.imagePath} liked={item.liked} likedByNumber={item.likes} caption={item.caption} hours={item.postedAt} profileImagePath={item.profileImagePath}/>
             ))
         }
         {/* {console.log(posts)} */}

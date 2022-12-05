@@ -38,14 +38,14 @@ body {
     display: block;
   }
 
-.Profile_container {
+.User_container {
     max-width: 92.5rem;
     width: 100%;/*might be removed*/
     margin: 0 auto;
     padding: 0 2rem;
 }
 
-.Profile_btn {
+.User_btn {
     display: inline-block;
     font: inherit;
     background: none;
@@ -55,11 +55,11 @@ body {
     cursor: pointer;
 }
 
-.Profile_btn:focus {
+.User_btn:focus {
     outline: 0.5rem auto #4d90fe;
 }
 
-.Profile_visually-hidden {
+.User_visually-hidden {
     position: absolute !important;
     height: 1px;
     width: 1px;
@@ -69,17 +69,17 @@ body {
 
 /* Profile Section */
 
-.Profile_profile {
+.User_profile {
     padding: 5rem 0;
 }
 
-.Profile_profile::after {
+.User_profile::after {
     content: "";
     display: block;
     clear: both;
 }
 
-.Profile_profile-image {
+.User_profile-image {
     float: left;
     width: calc(33.333% - 1rem);
     display: flex;
@@ -88,7 +88,7 @@ body {
     margin-right: 3rem;
 }
 
-.Profile_profile-image img {
+.User_profile-image img {
     border-radius: 50%;
     min-width: 152px;
     min-height: 152px;
@@ -96,33 +96,34 @@ body {
     max-height: 152px;
 }
 
-.Profile_profile-user-settings,
-.Profile_profile-stats,
-.Profile_profile-bio {
+.User_profile-user-settings,
+.User_profile-stats,
+.User_profile-bio {
     float: left;
     width: calc(66.666% - 2rem);
+    /* width: calc(100% - 2rem); */
 }
 
-.Profile_profile-user-settings {
+.User_profile-user-settings {
     margin-top: 1.1rem;
 }
 
-.Profile_profile-user-name {
+.User_profile-user-name {
     display: inline-block;
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     font-weight: 300;
 }
 
-.Profile_profile-edit-btn {
+.User_profile-edit-btn {
     font-size: 0.875rem;
     line-height: 1.8;
     border: 0.1rem solid #2766ed;
     border-radius: 0.3rem;
     padding: 0 2.4rem;
-    margin-left: 2rem;
+    /* margin-left: 2rem; */
 }
 
-.Profile_profile-logout-btn {
+.User_profile-logout-btn {
     font-size: 2rem;
     margin-left: 1rem;
     background-image: url(../images/logout2.png) ;
@@ -132,11 +133,11 @@ body {
     height: 22px;
 }
 
-.Profile_profile-stats {
+.User_profile-stats {
     margin-top: 2.3rem;
 }
 
-.Profile_profile-stats li {
+.User_profile-stats li {
     display: inline-block;
     font-size: 1.2rem;
     line-height: 1.5;
@@ -144,33 +145,33 @@ body {
     cursor: pointer;
 }
 
-.Profile_profile-stats li:last-of-type {
+.User_profile-stats li:last-of-type {
     margin-right: 0;
 }
 
-.Profile_profile-bio {
+.User_profile-bio {
     font-size: 1.0rem;
     font-weight: 400;
     line-height: 1.5;
-    margin-top: 2.3rem;
+    /* margin-top: 2.3rem; */
 }
 
-.Profile_profile-real-name,
-.Profile_profile-stat-count,
-.Profile_profile-edit-btn {
+.User_profile-real-name,
+.User_profile-stat-count,
+.User_profile-edit-btn {
     font-weight: 600;
 }
 
 /* Gallery Section */
 
-.Profile_gallery {
+.User_gallery {
     display: flex;
     flex-wrap: wrap;
     margin: -1rem -1rem;
     padding-bottom: 3rem;
 }
 
-.Profile_gallery-item {
+.User_gallery-item {
     position: relative;
     flex: 1 0 22rem;
     margin: 1rem;
@@ -178,8 +179,8 @@ body {
     cursor: pointer;
 }
 
-.Profile_gallery-item:hover .Profile_gallery-item-info,
-.Profile_gallery-item:focus .Profile_gallery-item-info {
+.User_gallery-item:hover .User_gallery-item-info,
+.User_gallery-item:focus .User_gallery-item-info {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -190,21 +191,21 @@ body {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.Profile_gallery-item-info {
+.User_gallery-item-info {
     display: none;
 }
 
-.Profile_gallery-item-info li {
+.User_gallery-item-info li {
     display: inline-block;
     font-size: 1.7rem;
     font-weight: 600;
 }
 
-.Profile_gallery-item-likes {
+.User_gallery-item-likes {
     margin-right: 2.2rem;
 }
 
-.Profile_gallery-item-type {
+.User_gallery-item-type {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -217,55 +218,41 @@ body {
     transform: rotateY(180deg);
 }
 
-.Profile_gallery-image {
+.User_gallery-image {
     width: 80%;
     height: 80%;
     object-fit: cover;
 }
 
 .customBtn{
-    margin:2px;
-    padding: 0 5px;
+    margin-top:10px;
     color: #fff;
     background-color: #2766ed;
 }
 
-/* Loader */
-
-/* .loader {
-    width: 5rem;
-    height: 5rem;
-    border: 0.6rem solid #999;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    margin: 0 auto;
-    animation: loader 500ms linear infinite;
-} */
-
-/* Media Query */
 
 /* @media screen and (max-width: 40rem) { */
 @media only screen and (max-width: 500px) {
-    .Profile_profile {
+    .User_profile {
         display: flex;
         flex-wrap: wrap;
         padding: 4rem 0;
         padding-bottom: 0;
     }
 
-    .Profile_profile::after {
+    .User_profile::after {
         display: none;
     }
 
-    .Profile_profile-image,
-    .Profile_profile-user-settings,
-    .Profile_profile-bio,
-    .Profile_profile-stats {
+    .User_profile-image,
+    .User_profile-user-settings,
+    .User_profile-bio,
+    .User_profile-stats {
         float: none;
         width: auto;
     }
 
-    .Profile_profile-image img {
+    .User_profile-image img {
         margin-top: 20px;
         width: 7.7rem;
         min-width: 123.2px;
@@ -274,45 +261,45 @@ body {
         max-height: 123.2px;
     }
 
-    .Profile_profile-user-settings {
+    .User_profile-user-settings {
         flex-basis: calc(100% - 10.7rem);
         display: flex;
         flex-wrap: wrap;
-        margin-top: 1rem;
+        /* margin-top: 1rem; */
     }
 
-    .Profile_profile-user-name {
-        font-size: 1.2rem;
+    .User_profile-user-name {
+        font-size: 1.1rem;
     }
 
-    .Profile_profile-edit-btn {
+    .User_profile-edit-btn {
         order: 1;
         padding: 0;
         text-align: center;
         margin-top: 1rem;
     }
 
-    .Profile_profile-edit-btn {
+    .User_profile-edit-btn {
         margin-left: 0;
     }
 
-    .Profile_profile-bio {
-        font-size: 1.0rem;
-        margin-top: 1.5rem;
+    .User_profile-bio {
+        font-size: 0.9rem;
+        /* margin-top: 1.5rem; */
     }
 
-    .Profile_profile-edit-btn,
-    .Profile_profile-bio,
-    .Profile_profile-stats {
+    .User_profile-edit-btn,
+    .User_profile-bio,
+    .User_profile-stats {
         flex-basis: 100%;
     }
 
-    .Profile_profile-stats {
+    .User_profile-stats {
         order: 1;
-        margin-top: 0.5rem;
+        /* margin-top: 0.5rem; */
     }
 
-    .Profile_profile-stats ul {
+    .User_profile-stats ul {
         display: flex;
         text-align: center;
         padding: 1.2rem 0;
@@ -320,35 +307,26 @@ body {
         border-bottom: 0.1rem solid #dadada;
     }
 
-    .Profile_profile-stats li {
+    .User_profile-stats li {
         font-size: 1.0rem;
         flex: 1;
         margin: 0;
     }
 
-    .Profile_profile-stat-count {
+    .User_profile-stat-count {
         display: block;
+    }
+    .customBtn{
+        margin:2px;
+        padding: 0 5px;
+        color: #fff;
+        background-color: #2766ed;
     }
 }
 
-/* Spinner Animation */
-
-/* @keyframes loader {
-    to {
-        transform: rotate(360deg);
-    }
-} */
-
-/*
-
-The following code will only run if your browser supports CSS grid.
-
-Remove or comment-out the code block below to see how the browser will fall-back to flexbox & floated styling. 
-
-*/
 
 @supports (display: grid) {
-    .Profile_profile {
+    .User_profile {
         display: grid;
         grid-template-columns: 1fr 2fr;
         grid-template-rows: repeat(3, auto);
@@ -356,60 +334,55 @@ Remove or comment-out the code block below to see how the browser will fall-back
         align-items: center;
     }
 
-    .Profile_profile-image {
+    .User_profile-image {
         grid-row: 1 / -1;
     }
 
-    .Profile_gallery {
+    .User_gallery {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
         grid-gap: 2rem;
     }
 
-    .Profile_profile-image,
-    .Profile_profile-user-settings,
-    .Profile_profile-stats,
-    .Profile_profile-bio,
-    .Profile_gallery-item,
-    .Profile_gallery {
+    .User_profile-image,
+    .User_profile-user-settings,
+    .User_profile-stats,
+    .User_profile-bio,
+    .User_gallery-item,
+    .User_gallery {
         width: auto;
         margin: 0;
     }
 
     /* @media (max-width: 40rem) { */
         @media only screen and (max-width: 500px) {
-        .Profile_profile {
+        .User_profile {
             grid-template-columns: auto 1fr;
             grid-row-gap: 1.5rem;
         }
 
-        .Profile_profile-image {
+        .User_profile-image {
             grid-row: 1 / 2;
         }
 
-        .Profile_profile-user-settings {
+        .User_profile-user-settings {
             display: grid;
             grid-template-columns: auto 1fr;
             grid-gap: 1rem;
         }
 
-        .Profile_profile-edit-btn,
-        .Profile_profile-stats,
-        .Profile_profile-bio {
+        .User_profile-edit-btn,
+        .User_profile-stats,
+        .User_profile-bio {
             grid-column: 1 / -1;
         }
 
-        .Profile_profile-user-settings,
-        .Profile_profile-edit-btn,
-        .Profile_profile-logout-btn,
-        .Profile_profile-bio,
-        .Profile_profile-stats {
+        .User_profile-user-settings,
+        .User_profile-edit-btn,
+        .User_profile-logout-btn,
+        .User_profile-bio,
+        .User_profile-stats {
             margin: 0;
-        }
-        .Profile_profile-logout-btn{
-            margin-top: 10px;
-            /* background-size: 100%;
-            height: 20px; */
         }
     }
 }

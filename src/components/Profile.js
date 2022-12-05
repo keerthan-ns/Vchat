@@ -1,6 +1,10 @@
 import "../styles/profile.scss";
 import ProfileIcon from "./ProfileIcon";
 import users from "../data/users";
+import { Button,IconButton  } from "@material-ui/core";
+import View from '@material-ui/icons/Visibility';
+import Accept from '@material-ui/icons/PersonAdd';
+import toast,{Toaster} from 'react-hot-toast';
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 function Profile(props) {
@@ -9,72 +13,44 @@ function Profile(props) {
     caption,
     urlText,
     iconSize,
-    // captionSize,
+    viewIcons,
     storyBorder,
     hideAccountName,
     profileImagePath,
   } = props;
 
-  // let accountName = username
-  //   ? username
-  //   : users[Math.floor(Math.random() * users.length)].username;
-  // function get_profile(){
-  //   //get profile
-  //   var uname = username;
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.open("POST", BASE_URL + "fetch_profile/", true);
-  //   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  //   xhr.send("username=" + uname);
-  //   xhr.onreadystatechange = function(){
-  //       if (xhr.readyState === 4 && xhr.status === 200) {
-  //           var response = xhr.responseText;
-  //           response = JSON.parse(response); 
-  //           // setImagePath(response.imagePath);
-  //           // get_image(response.imagePath);
-  //           console.log(response);
-  //           return response.imagePath;
-  //       }
-  //   }
-  // }
-
-  // function get_image(image_pathh){
-  //   //get image
-  //   // var username = "null";
-  //   var username = "test2";
-  //   // var image_path = document.getElementById("image_path").value;
-  //   // console.log(uname+" "+username);
-  //   if(image_pathh === undefined)
-  //     image_pathh = "5a4457a2-ce51-4ee8-b6ca-4466ceea98a7.png";
-  //   console.log("OFF no use :"+image_pathh);
-  //   var image_path = image_pathh;
-  //   var image_extension = image_pathh.split('.').pop();
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.open("POST", BASE_URL + "get_image/", true);
-  //   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  //   xhr.overrideMimeType('text/plain; charset=x-user-defined');                 //added line: for binary data
-  //   xhr.send("username=" + username + "&imagePath=" + image_path);
-  //   xhr.onreadystatechange = function(){
-  //       if (xhr.readyState === 4 && xhr.status === 200) {
-  //           // // var response = xhr.responseText;
-  //           var binary = "";
-  //           var responseText = xhr.responseText;
-  //           var responseTextLen = responseText.length;
-
-  //           for (let i = 0; i < responseTextLen; i++ ) {
-  //               binary += String.fromCharCode(responseText.charCodeAt(i) & 255);
-  //           }
-  //           var image_source = 'data:image/' + image_extension + ';base64,' + btoa(binary);
-
-  //           // console.log(image_source);          //response from server
-  //           // document.getElementById('profilepic').src = image_source;       
-  //           return image_source;
-
-  //       }
-  //   }
-  // }
+  function accept_follow_request(uname){
+    //accept follow request
+    // console.log("Clicked me");
+    // console.log(uname);
+    var username2 = uname;
+    var username = localStorage.getItem("users").replaceAll('"','');
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", BASE_URL + "accept_follow_request/", true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send("username=" + username + "&follow_username=" + username2);
+    xhr.onreadystatechange = function(){
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = xhr.responseText;
+            console.log(response);          
+            response = JSON.parse(response);      
+            if(response.status === "success"){
+              toast.success("Follow request accepted");
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
+              
+            }  
+            else{
+              toast.error(response.message);
+            }  
+        }
+    }
+  }
 
   return (
     <div className="profile">
+      <Toaster/>
       <ProfileIcon
         iconSize={iconSize}
         storyBorder={storyBorder}
@@ -92,8 +68,16 @@ function Profile(props) {
           <span className="accountName">{accountName}</span>
         </div>
       )} */}
-      {/* <button onClick={navto}>{urlText}</button> */}
-      <a href="/profile">{urlText}</a>
+      {/* <a href={"user/"+username} >{urlText}</a> */}
+      {viewIcons ?
+        (<><Button href={"user/"+username} size="small" color="primary"><View/></Button>
+        <Button id={username} onClick={()=>accept_follow_request(username)}  size="small" color="primary"><Accept/></Button></>):(null)
+      }
+      {/* {viewIcons ?
+        (<Button href={"user/Addfriend"} size="small" color="primary"><Accept/></Button>):(null)
+      } */}
+      
+      
     </div>
   );
 }

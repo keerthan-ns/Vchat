@@ -38,42 +38,39 @@ function Menu() {
 
     function get_image(image_pathh){
       //get image
-      var username = localStorage.getItem("users").replaceAll('"','');
       // var username = "test2";
       // var image_path = document.getElementById("image_path").value;
       // console.log(uname+" "+username);
       // console.log(image_pathh);
-      var image_path = image_pathh;
-      var image_extension = image_pathh.split('.').pop();
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", BASE_URL + "get_image/", true);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.overrideMimeType('text/plain; charset=x-user-defined');                 //added line: for binary data
-      xhr.send("username=" + username + "&imagePath=" + image_path);
-      xhr.onreadystatechange = function(){
-          if (xhr.readyState === 4 && xhr.status === 200) {
-              // // var response = xhr.responseText;
-              var binary = "";
-              var responseText = xhr.responseText;
-              var responseTextLen = responseText.length;
-  
-              for (let i = 0; i < responseTextLen; i++ ) {
-                  binary += String.fromCharCode(responseText.charCodeAt(i) & 255);
-              }
-              var image_source = 'data:image/' + image_extension + ';base64,' + btoa(binary);
-  
-              // console.log(image_source);          //response from server
-              document.getElementById("menuProfile").src = image_source;       //for displaying image
-              
-              // return image_source;
-  
-          }
+      if(image_pathh !== undefined){
+        var username = localStorage.getItem("users").replaceAll('"','');
+        var image_path = image_pathh;
+        var image_extension = image_pathh.split('.').pop();
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", BASE_URL + "get_image/", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.overrideMimeType('text/plain; charset=x-user-defined');    
+        xhr.send("username=" + username + "&imagePath=" + image_path);
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // // var response = xhr.responseText;
+                var binary = "";
+                var responseText = xhr.responseText;
+                var responseTextLen = responseText.length;
+    
+                for (let i = 0; i < responseTextLen; i++ ) {
+                    binary += String.fromCharCode(responseText.charCodeAt(i) & 255);
+                }
+                var image_source = 'data:image/' + image_extension + ';base64,' + btoa(binary);
+                document.getElementById("menuProfile").src = image_source;
+            }
+        }
       }
     }
     
   useEffect(() => {
     get_profile();
-  }, []);
+  },[]);
   
   return (
     <div className="menu">

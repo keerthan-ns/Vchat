@@ -5,6 +5,7 @@ import Home from '../HomePage';
 import LoginPage from '../LoginPage';
 import Notifications from '../Notifications';
 import ProfilePage from '../ProfilePage';
+import User from '../User';
 
 
 function AppRouter() {
@@ -17,6 +18,7 @@ function AppRouter() {
             <Route path="/notifications" element={<Notifications/>}/>
             <Route path="/home" element={<Home/>}/>
             <Route path="/profile" element={<ProfilePage/>}/>
+            <Route path="/user/:username" element={<User/>}/>
         </Routes>
     </Router>
   )

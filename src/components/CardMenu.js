@@ -11,24 +11,27 @@ const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 function CardMenu(props) {
   const [cid,setCid] = useState(props.cid);
   const [liked,setLiked] =useState( props.liked);
+
     function likepost(){
       //like post
-      var username = document.getElementById("username6").value;
+      var username = localStorage.getItem("users").replaceAll('"','');
       // var post_id = document.getElementById("post_id").value;
       var post_id = cid;
       var xhr = new XMLHttpRequest();
       xhr.open("POST", BASE_URL + "like_post/", true);
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.send("username=" + username + "&post_id=" + post_id);
+      console.log("username=" + username + "&post_id=" + post_id);
       xhr.onreadystatechange = function(){
           if (xhr.readyState === 4 && xhr.status === 200) {
               var response = xhr.responseText;
               console.log(response);          //response from server
               response = JSON.parse(response);        //contains 'status' and 'message'
               if(response.status === "success"){
-                toast.success("You liked the post");
+                // toast.success("You liked the post");
                 toast.success(response.message);
-                window.location.reload();
+                setLiked(true);
+                // window.location.reload();
               }
               else{
                 toast.error(response.message);

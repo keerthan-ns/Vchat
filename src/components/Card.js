@@ -62,7 +62,7 @@ function Card(props) {
       <div className="likedBy">
         {/* <Profile iconSize="small" hideAccountName={true} /> */}
         <span>
-          <strong>Liked by {likedByNumber} peoples</strong><br/>
+          <strong>Total likes {likedByNumber}</strong><br/>
           {caption}
         </span>
       </div>
