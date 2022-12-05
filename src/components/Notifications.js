@@ -40,7 +40,7 @@ function Notifications() {
                 </div>
                 {
                     requests?.map((item,index)=>(
-                        <div key={index} style={{width:'device-width'}}><Profile  username={item.sourceId} profileImagePath={item.imagePath} urlText="View" iconSize="medium" viewIcons="true"/>
+                        <div key={index} style={{width:'device-width'}}><Profile  username={item.sourceId} profileImagePath={item.imagePath} urlText="View" iconSize="medium" viewIcon="true" acceptIcon="true"/>
                         <hr/>
                         </div>
                     ))

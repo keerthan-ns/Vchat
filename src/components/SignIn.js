@@ -31,7 +31,7 @@ function SignIn() {
                     navigate('/home');
                     
                 }
-                else{
+                else if(response.status === "error"){
                     toast.error(response.message);
                     document.getElementById("login_btn").disabled = false;
                     document.getElementById("login_btn").style.backgroundColor = "#0395F6";

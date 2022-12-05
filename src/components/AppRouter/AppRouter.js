@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import Explore from '../Explore';
 import Home from '../HomePage';
 import LoginPage from '../LoginPage';
 import Notifications from '../Notifications';
@@ -16,6 +16,7 @@ function AppRouter() {
             <Route path="/" element={<LoginPage/>}/>
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/notifications" element={<Notifications/>}/>
+            <Route path="/explore" element={<Explore/>}/>
             <Route path="/home" element={<Home/>}/>
             <Route path="/profile" element={<ProfilePage/>}/>
             <Route path="/user/:username" element={<User/>}/>

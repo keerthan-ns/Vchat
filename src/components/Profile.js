@@ -13,7 +13,8 @@ function Profile(props) {
     caption,
     urlText,
     iconSize,
-    viewIcons,
+    viewIcon,
+    acceptIcon,
     storyBorder,
     hideAccountName,
     profileImagePath,
@@ -69,9 +70,11 @@ function Profile(props) {
         </div>
       )} */}
       {/* <a href={"user/"+username} >{urlText}</a> */}
-      {viewIcons ?
-        (<><Button href={"user/"+username} size="small" variant="contained" color="primary">View</Button>
-        <Button id={username} onClick={()=>accept_follow_request(username)}  size="small" color="primary"><Accept/></Button></>):(null)
+      {viewIcon ?
+        (<Button href={"user/"+username} size="small" variant="contained" color="primary">View</Button>):(null)
+      }
+      {acceptIcon ?
+        (<Button id={username} onClick={()=>accept_follow_request(username)}  size="small" color="primary"><Accept/></Button>):(null)
       }
       {/* {viewIcons ?
         (<Button href={"user/Addfriend"} size="small" color="primary"><Accept/></Button>):(null)

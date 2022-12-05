@@ -81,8 +81,8 @@ function ProfileIcon(props) {
       setTimeout(()=>{
         if(image_pathh !== undefined){
           var username = "test2";
-          console.log("OFF no use :"+image_pathh);
-          console.log("type"+typeof(image_pathh));
+          // console.log("OFF no use :"+image_pathh);
+          // console.log("type"+typeof(image_pathh));
           var image_path = image_pathh;
           var image_extension = image_pathh.split('.').pop();
           var xhr = new XMLHttpRequest();

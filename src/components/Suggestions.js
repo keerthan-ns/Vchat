@@ -6,6 +6,8 @@ const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 
 function Suggestions() {
 
+  const [suggestions,setSuggestions] = useState([]);
+
   function recommendations(){
     //get recommendations
     var username = localStorage.getItem("users").replaceAll('"','');
@@ -18,11 +20,14 @@ function Suggestions() {
             var response = xhr.responseText;
             console.log(response);          //response from server
             response = JSON.parse(response);        //contains 'status' and 'message'
+            console.log("Suggestions");
+            console.log(response);
+            setSuggestions(response);
         }
     }
   }
   useEffect(() => {
-    // recommendations();
+    recommendations();
   }, []);
 
   return (
@@ -31,8 +36,14 @@ function Suggestions() {
         <div className="title">Suggestions For You</div>
         {/* <a href="/">See All</a> */}
       </div>
-
-      <Profile
+      {
+        suggestions?.map((item,index)=>(
+            <div key={index}><Profile  username={item.username} profileImagePath={item.imagePath} urlText="View" iconSize="medium" viewIcon="true"/>
+            <hr/>
+            </div>
+        ))
+      }
+      {/* <Profile
         caption="Followed by mapvault + 3 more"
         urlText="Follow"
         iconSize="medium"
@@ -61,7 +72,7 @@ function Suggestions() {
         urlText="Follow"
         iconSize="medium"
         captionSize="small"
-      />
+      /> */}
     </div>
   );
 }
