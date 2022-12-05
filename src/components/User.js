@@ -191,25 +191,31 @@ function User() {
                         </div>
                     </div>
                 </header>
-                
-                {(userposts.length !== 0) ? (<section className="grid">
-                    {
-                        userposts?.map((item,index)=>(
-                            <div key={(item._id).toString()}>
-                                <img id={item._id} src={get_image(profile.username,item._id,item.imagePath)} className='grid__photo' alt="" />
-                            </div>
-                        ))
-                    }
-
-                    </section>)
-                  :(
-                      <section className="nopost">
-                        <div className='nopost__nophoto'/>
-                        <img src={noPost} className='nopost__nophoto' alt="" />
-                        <div className='nopost__nophoto'/>
-                      </section>
-                  )
-                }
+                {(profile.type === "public")?(
+                  (userposts.length !== 0) ? (<section className="grid">
+                      {
+                          userposts?.map((item,index)=>(
+                              <div key={(item._id).toString()}>
+                                  <img id={item._id} src={get_image(profile.username,item._id,item.imagePath)} className='grid__photo' alt="" />
+                              </div>
+                          ))
+                      }
+                      </section>)
+                    :(
+                        <section className="nopost">
+                          <div className='nopost__nophoto'/>
+                          <img src={noPost} className='nopost__nophoto' alt="" />
+                          <div className='nopost__nophoto'/>
+                        </section>
+                    )
+                ):null}
+                {(profile.type === "private" && (profile.follow_status === "rejected" || profile.follow_status === "follow request not sent"  || profile.follow_status === "unfollowed" || profile.follow_status === "pending") )?(
+                        <section className="nopost">
+                          <div className='nopost__nophoto'/>
+                          <img src={accPrivate} className='nopost__nophoto' alt="" />
+                          <div className='nopost__nophoto'/>
+                        </section>
+                    ):null}
     </>
   )
 }

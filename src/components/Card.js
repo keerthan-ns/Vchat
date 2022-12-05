@@ -1,6 +1,7 @@
 import "../styles/card.scss";
 import Profile from "./Profile";
 import CardMenu from "./CardMenu";
+import { useState } from "react";
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 
@@ -12,11 +13,13 @@ function Card(props) {
     image,
     accountName,
     liked,
-    likedByNumber,
+    // likedByNumber,
     caption,
     hours,
     profileImagePath,
   } = props;
+
+  const [likedByNumber,setLikedByNumber] = useState(props.likedByNumber);
 
   function get_image(cid,accountName,image_pathh){
     //get image
@@ -51,6 +54,10 @@ function Card(props) {
     }
   }
 
+  function setParentLiked (change) {
+    (change === "increment")?setLikedByNumber(likedByNumber+1):setLikedByNumber(likedByNumber-1);
+  }
+
   return (
     <div className="card">
       <header>
@@ -58,7 +65,7 @@ function Card(props) {
         {/* <CardButton className="cardButton" /> */}
       </header>
       <img id={cid} className="cardImage" src={get_image(cid,accountName,image)} alt="card content" />
-      <CardMenu cid={cid} liked={liked}/>
+      <CardMenu cid={cid} liked={liked} setParentLiked={setParentLiked}/>
       <div className="likedBy">
         {/* <Profile iconSize="small" hideAccountName={true} /> */}
         <span>

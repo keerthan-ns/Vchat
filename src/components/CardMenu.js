@@ -21,7 +21,6 @@ function CardMenu(props) {
       xhr.open("POST", BASE_URL + "like_post/", true);
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.send("username=" + username + "&post_id=" + post_id);
-      console.log("username=" + username + "&post_id=" + post_id);
       xhr.onreadystatechange = function(){
           if (xhr.readyState === 4 && xhr.status === 200) {
               var response = xhr.responseText;
@@ -29,8 +28,9 @@ function CardMenu(props) {
               response = JSON.parse(response);        //contains 'status' and 'message'
               if(response.status === "success"){
                 // toast.success("You liked the post");
-                toast.success(response.message);
                 setLiked(true);
+                props.setParentLiked('increment');
+                toast.success(response.message);
                 // window.location.reload();
               }
               else{
@@ -39,11 +39,38 @@ function CardMenu(props) {
           }
       }
   }
+
+  function unlikepost(){
+    //unlike post
+    var username = localStorage.getItem("users").replaceAll('"','');
+    var post_id = cid;
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", BASE_URL + "unlike_post/", true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send("username=" + username + "&post_id=" + post_id);
+    xhr.onreadystatechange = function(){
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = xhr.responseText;
+            console.log(response);          //response from server
+            response = JSON.parse(response);        //contains 'status' and 'message'
+            if(response.status === "success"){
+              setLiked(false);
+              props.setParentLiked('decrement');
+              toast('You disliked the post!', {
+                icon: '⚠',
+              });
+            }
+            else{
+              toast.error(response.message);
+            }
+        }
+    }
+  }
   return (
     <div className="cardMenu">
       <Toaster/>
       <div className="interactions">
-      {liked ? <Liked className="icon heart"/> : <Heart className="icon heart" onClick={likepost}/>}
+      {liked ? <Liked className="icon heart" onClick={unlikepost}/> : <Heart className="icon heart" onClick={likepost}/>}
         {/* <Heart className="icon heart" onClick={likepost}/> */}
         <Inbox className="icon" />
       </div>
