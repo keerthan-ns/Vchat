@@ -12,6 +12,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import noPost from "../images/no_post.png";
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 
@@ -309,13 +310,17 @@ function ProfilePage() {
                     </div>
                 </header>
                 
-                <section className="grid">
-                {
-                    myposts?.map((item,index)=>(
-                        <div key={(item._id).toString()}>
-                            <img id={item._id} src={get_image(profile.username,item._id,item.imagePath)} className='grid__photo' alt="" />
-                        </div>
-                    ))
+                {(myposts.length !== 0)?(<section className="grid">
+                    {
+                        myposts?.map((item,index)=>(
+                            <div key={(item._id).toString()}>
+                                <img id={item._id} src={get_image(profile.username,item._id,item.imagePath)} className='grid__photo' alt="" />
+                            </div>
+                        ))
+                    }</section>):
+                    (<section className="nopost">
+                        <img src={noPost} className='nopost__nophoto' alt="" />
+                    </section>)
                 }
                     {/* <div>
                         <img src='https://images.unsplash.com/photo-1548032885-b5e38734688a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
@@ -398,7 +403,6 @@ function ProfilePage() {
                     <div>
                         <img src='https://images.unsplash.com/photo-1522586217274-9096ee38a805?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
                     </div>    */}
-                </section>
         </>
     )
 }

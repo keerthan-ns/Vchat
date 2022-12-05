@@ -4,7 +4,7 @@ import toast,{Toaster} from 'react-hot-toast';
 import NavBar from './Navigation';
 import "../styles/UserPage.css";
 import "../styles/ProfilePage.scss";
-import noPost from "../images/no_posts.png";
+import noPost from "../images/no_post.png";
 import accPrivate from "../images/acc_private.png";
 import { Button} from "@material-ui/core";
 
@@ -152,70 +152,70 @@ function User() {
         <Toaster/>
         <NavBar/>
         <header>
-                    <input type='text' value={profile._id} id="profileid" hidden/>
-                    <div className="User_container">
-                        <div className="User_profile">
-                            <div className="User_profile-image">
-                                <img src="" alt="" id="profileDP" style={{border:'3px solid darkblue'}}/>
-                            </div>
-                            <div className="User_profile-user-settings">
-                              <div className="User_profile-bio">
-                                  <span className="User_profile-user-name" style={{margin:'10px 0'}}>{username}</span><br/>
-                                  <p>
-                                    <span className="User_profile-real-name">{profile.fullname}</span><br/> {profile.bio}
-                                  </p>
-                              </div>
-                            </div>
-                            <div className="User_profile-stats">
-                                <ul>
-                                    <li><span className="User_profile-stat-count">{profile.posts_count}</span> posts</li>
-                                    <li><span className="User_profile-stat-count">{profile.follower_count}</span> followers</li>
-                                    <li><span className="User_profile-stat-count">{profile.following_count}</span> following</li>
-                                </ul>
-                            </div>
-                            
-                            <div className="User_profile-user-settings">
-                                {
-                                  (profile.follow_status === "pending")?(
-                                    <button className="User_btn User_profile-edit-btn customBtn" onClick={null}>Requested</button>):null
-                                }
-                                {
-                                  (profile.follow_status === "accepted")?(
-                                    <button className="User_btn User_profile-edit-btn customBtn" onClick={unfollow}>Unfollow</button>):null
-                                }
-                                {
-                                  (profile.follow_status === "rejected" || profile.follow_status === "follow request not sent" || profile.follow_status === "unfollowed")?(
-                                  <button className="User_btn User_profile-edit-btn customBtn" onClick={send_follow_request}>Follow</button>):null
-                                }
-                            </div>
-                        </div>
+            <input type='text' value={profile._id} id="profileid" hidden/>
+            <div className="User_container">
+                <div className="User_profile">
+                    <div className="User_profile-image">
+                        <img src="" alt="" id="profileDP" style={{border:'3px solid darkblue'}}/>
                     </div>
-                </header>
-                {(profile.type === "public")?(
-                  (userposts.length !== 0) ? (<section className="grid">
-                      {
-                          userposts?.map((item,index)=>(
-                              <div key={(item._id).toString()}>
-                                  <img id={item._id} src={get_image(profile.username,item._id,item.imagePath)} className='grid__photo' alt="" />
-                              </div>
-                          ))
-                      }
-                      </section>)
-                    :(
-                        <section className="nopost">
-                          <div className='nopost__nophoto'/>
-                          <img src={noPost} className='nopost__nophoto' alt="" />
-                          <div className='nopost__nophoto'/>
-                        </section>
-                    )
-                ):null}
-                {(profile.type === "private" && (profile.follow_status === "rejected" || profile.follow_status === "follow request not sent"  || profile.follow_status === "unfollowed" || profile.follow_status === "pending") )?(
-                        <section className="nopost">
-                          <div className='nopost__nophoto'/>
-                          <img src={accPrivate} className='nopost__nophoto' alt="" />
-                          <div className='nopost__nophoto'/>
-                        </section>
-                    ):null}
+                    <div className="User_profile-user-settings">
+                      <div className="User_profile-bio">
+                          <span className="User_profile-user-name" style={{margin:'10px 0'}}>{username}</span><br/>
+                          <p>
+                            <span className="User_profile-real-name">{profile.fullname}</span><br/> {profile.bio}
+                          </p>
+                      </div>
+                    </div>
+                    <div className="User_profile-stats">
+                        <ul>
+                            <li><span className="User_profile-stat-count">{profile.posts_count}</span> posts</li>
+                            <li><span className="User_profile-stat-count">{profile.follower_count}</span> followers</li>
+                            <li><span className="User_profile-stat-count">{profile.following_count}</span> following</li>
+                        </ul>
+                    </div>
+                    
+                    <div className="User_profile-user-settings">
+                        {
+                          (profile.follow_status === "pending")?(
+                            <button className="User_btn User_profile-edit-btn customBtn" onClick={null}>Requested</button>):null
+                        }
+                        {
+                          (profile.follow_status === "accepted")?(
+                            <button className="User_btn User_profile-edit-btn customBtn" onClick={unfollow}>Unfollow</button>):null
+                        }
+                        {
+                          (profile.follow_status === "rejected" || profile.follow_status === "follow request not sent" || profile.follow_status === "unfollowed")?(
+                          <button className="User_btn User_profile-edit-btn customBtn" onClick={send_follow_request}>Follow</button>):null
+                        }
+                    </div>
+                </div>
+            </div>
+        </header>
+        {(profile.type === "public")?(
+          (userposts.length !== 0) ? (<section className="grid">
+              {
+                  userposts?.map((item,index)=>(
+                      <div key={(item._id).toString()}>
+                          <img id={item._id} src={get_image(profile.username,item._id,item.imagePath)} className='grid__photo' alt="" />
+                      </div>
+                  ))
+              }
+              </section>)
+            :(
+                <section className="nopost">
+                  <div className='nopost__nophoto'/>
+                  <img src={noPost} className='nopost__nophoto' alt="" />
+                  <div className='nopost__nophoto'/>
+                </section>
+            )
+        ):null}
+        {(profile.type === "private" && (profile.follow_status === "rejected" || profile.follow_status === "follow request not sent"  || profile.follow_status === "unfollowed" || profile.follow_status === "pending") )?(
+                <section className="nopost">
+                  {/* <div className='nopost__nophoto'/> */}
+                  <img src={accPrivate} className='nopost__nophoto' alt="" />
+                  {/* <div className='nopost__nophoto'/> */}
+                </section>
+            ):null}
     </>
   )
 }

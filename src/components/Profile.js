@@ -70,7 +70,7 @@ function Profile(props) {
       )} */}
       {/* <a href={"user/"+username} >{urlText}</a> */}
       {viewIcons ?
-        (<><Button href={"user/"+username} size="small" color="primary"><View/></Button>
+        (<><Button href={"user/"+username} size="small" variant="contained" color="primary">View</Button>
         <Button id={username} onClick={()=>accept_follow_request(username)}  size="small" color="primary"><Accept/></Button></>):(null)
       }
       {/* {viewIcons ?

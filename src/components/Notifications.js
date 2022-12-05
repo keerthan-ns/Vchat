@@ -39,7 +39,6 @@ function Notifications() {
                     <div className="title">Recent follow requests</div>
                 </div>
                 {
-                    
                     requests?.map((item,index)=>(
                         <div key={index} style={{width:'device-width'}}><Profile  username={item.sourceId} profileImagePath={item.imagePath} urlText="View" iconSize="medium" viewIcons="true"/>
                         <hr/>

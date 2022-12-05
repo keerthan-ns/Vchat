@@ -398,7 +398,7 @@ Remove or comment-out the code block below to see how the browser will fall-back
         .Profile_profile-bio {
             grid-column: 1 / -1;
         }
-
+        
         .Profile_profile-user-settings,
         .Profile_profile-edit-btn,
         .Profile_profile-logout-btn,
@@ -410,6 +410,12 @@ Remove or comment-out the code block below to see how the browser will fall-back
             margin-top: 10px;
             /* background-size: 100%;
             height: 20px; */
+        }
+        .customBtn{
+            margin:2px;
+            /* padding: 0 5px; */
+            color: #fff;
+            background-color: #2766ed;
         }
     }
 }
