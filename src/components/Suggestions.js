@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import "../styles/suggestions.scss";
-import Profile from "./Profile";
+import React, { useEffect, useState } from "react"
+import "../styles/suggestions.scss"
+import Profile from "./Profile"
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 

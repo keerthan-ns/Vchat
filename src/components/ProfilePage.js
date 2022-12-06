@@ -13,6 +13,7 @@ import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import noPost from "../images/no_post.png";
+import dummy from "../images/user.png";
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 
@@ -114,34 +115,33 @@ function ProfilePage() {
     function get_image(uname,cid,image_pathh){
         //get image
         var username = localStorage.getItem("users").replaceAll('"','');
-        // var username = "test2";
-        // var image_path = document.getElementById("image_path").value;
-        // console.log(uname+" "+username);
         console.log(image_pathh);
-        var image_path = image_pathh;
-        var image_extension = image_pathh.split('.').pop();
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", BASE_URL + "get_image/", true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.overrideMimeType('text/plain; charset=x-user-defined');                 //added line: for binary data
-        xhr.send("username=" + username + "&imagePath=" + image_path);
-        xhr.onreadystatechange = function(){
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // // var response = xhr.responseText;
-                var binary = "";
-                var responseText = xhr.responseText;
-                var responseTextLen = responseText.length;
-    
-                for (let i = 0; i < responseTextLen; i++ ) {
-                    binary += String.fromCharCode(responseText.charCodeAt(i) & 255);
+        if(image_pathh !== undefined){
+            var image_path = image_pathh;
+            var image_extension = image_pathh.split('.').pop();
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", BASE_URL + "get_image/", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.overrideMimeType('text/plain; charset=x-user-defined');                 //added line: for binary data
+            xhr.send("username=" + username + "&imagePath=" + image_path);
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // // var response = xhr.responseText;
+                    var binary = "";
+                    var responseText = xhr.responseText;
+                    var responseTextLen = responseText.length;
+        
+                    for (let i = 0; i < responseTextLen; i++ ) {
+                        binary += String.fromCharCode(responseText.charCodeAt(i) & 255);
+                    }
+                    var image_source = 'data:image/' + image_extension + ';base64,' + btoa(binary);
+        
+                    // console.log(image_source);          //response from server
+                    document.getElementById(cid).src = image_source;       //for displaying image
+                    
+                    // return image_source;
+        
                 }
-                var image_source = 'data:image/' + image_extension + ';base64,' + btoa(binary);
-    
-                // console.log(image_source);          //response from server
-                document.getElementById(cid).src = image_source;       //for displaying image
-                
-                // return image_source;
-    
             }
         }
     }
@@ -288,7 +288,7 @@ function ProfilePage() {
                     <div className="Profile_container">
                         <div className="Profile_profile">
                             <div className="Profile_profile-image">
-                                <img src="" alt="" id="profileDP" style={{border:'3px solid darkblue'}}/>
+                                <img src={dummy} alt="" id="profileDP" style={{border:'3px solid darkblue'}}/>
                             </div>
                             <div className="Profile_profile-user-settings">
                                 <h1 className="Profile_profile-user-name">{profile.username}</h1>

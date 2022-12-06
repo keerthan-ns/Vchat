@@ -14,7 +14,7 @@ function SignIn() {
         
         document.getElementById("login_btn").disabled = true;
         document.getElementById("login_btn").style.backgroundColor = "grey";
-        var username = document.getElementById("username").value;
+        var username = document.getElementById("username").value.trim();
         var password = document.getElementById("password").value;
         var xhr = new XMLHttpRequest();
         xhr.open("POST", BASE_URL + "login/", true);

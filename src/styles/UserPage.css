@@ -233,6 +233,9 @@ body {
 
 /* @media screen and (max-width: 40rem) { */
 @media only screen and (max-width: 500px) {
+    .horiLine{
+        display: none;
+    }
     .User_profile {
         display: flex;
         flex-wrap: wrap;

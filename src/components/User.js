@@ -7,6 +7,7 @@ import "../styles/ProfilePage.scss";
 import noPost from "../images/no_post.png";
 import accPrivate from "../images/acc_private.png";
 import { Button} from "@material-ui/core";
+import dummy from "../images/user.png";
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 
@@ -29,6 +30,7 @@ function User() {
               // console.log(response);          //response from server
               // ***** for profile pic use get_image() function *****
               response = JSON.parse(response); 
+              console.log("USER INFORMATION");
               console.log(response);
               get_image(response.username,"profileDP",response.imagePath);
               setProfile(response);
@@ -64,31 +66,33 @@ function User() {
       // var image_path = document.getElementById("image_path").value;
       // console.log(uname+" "+username);
       console.log(image_pathh);
-      var image_path = image_pathh;
-      var image_extension = image_pathh.split('.').pop();
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", BASE_URL + "get_image/", true);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.overrideMimeType('text/plain; charset=x-user-defined');                 //added line: for binary data
-      xhr.send("username=" + usern + "&imagePath=" + image_path);
-      xhr.onreadystatechange = function(){
-          if (xhr.readyState === 4 && xhr.status === 200) {
-              // // var response = xhr.responseText;
-              var binary = "";
-              var responseText = xhr.responseText;
-              var responseTextLen = responseText.length;
-  
-              for (let i = 0; i < responseTextLen; i++ ) {
-                  binary += String.fromCharCode(responseText.charCodeAt(i) & 255);
-              }
-              var image_source = 'data:image/' + image_extension + ';base64,' + btoa(binary);
-  
-              // console.log(image_source);          //response from server
-              document.getElementById(cid).src = image_source;       //for displaying image
-              
-              // return image_source;
-  
-          }
+      if(image_pathh !== undefined){
+        var image_path = image_pathh;
+        var image_extension = image_pathh.split('.').pop();
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", BASE_URL + "get_image/", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.overrideMimeType('text/plain; charset=x-user-defined');                 //added line: for binary data
+        xhr.send("username=" + usern + "&imagePath=" + image_path);
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // // var response = xhr.responseText;
+                var binary = "";
+                var responseText = xhr.responseText;
+                var responseTextLen = responseText.length;
+    
+                for (let i = 0; i < responseTextLen; i++ ) {
+                    binary += String.fromCharCode(responseText.charCodeAt(i) & 255);
+                }
+                var image_source = 'data:image/' + image_extension + ';base64,' + btoa(binary);
+    
+                // console.log(image_source);          //response from server
+                document.getElementById(cid).src = image_source;       //for displaying image
+                
+                // return image_source;
+    
+            }
+        }
       }
   }
 
@@ -117,6 +121,7 @@ function User() {
         }
     }
   }
+
   function send_follow_request(){
     //send follow request
     var usern1 = localStorage.getItem("users").replaceAll('"','');
@@ -156,7 +161,7 @@ function User() {
             <div className="User_container">
                 <div className="User_profile">
                     <div className="User_profile-image">
-                        <img src="" alt="" id="profileDP" style={{border:'3px solid darkblue'}}/>
+                        <img src={dummy} alt="" id="profileDP" style={{border:'3px solid darkblue'}}/>
                     </div>
                     <div className="User_profile-user-settings">
                       <div className="User_profile-bio">
@@ -191,6 +196,7 @@ function User() {
                 </div>
             </div>
         </header>
+        <hr className="horiLine"/>
         {(profile.type === "public")?(
           (userposts.length !== 0) ? (<section className="grid">
               {

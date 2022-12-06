@@ -25,21 +25,21 @@ class LoginPage extends Component {
             this.setState({isLogin: true});
     }
 
-    sendLogoutRequest(){
-        //send logout request
-        var username = "newuser";
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", BASE_URL + "logout/", true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send("username=" + username);
-        xhr.onreadystatechange = function(){
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                var response = xhr.responseText;
-                console.log(response);          //response from server
-                response = JSON.parse(response);        //contains 'status' and 'message'
-            }
-        }
-    }
+    // sendLogoutRequest(){
+    //     //send logout request
+    //     var username = "newuser";
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.open("POST", BASE_URL + "logout/", true);
+    //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    //     xhr.send("username=" + username);
+    //     xhr.onreadystatechange = function(){
+    //         if (xhr.readyState === 4 && xhr.status === 200) {
+    //             var response = xhr.responseText;
+    //             console.log(response);          //response from server
+    //             response = JSON.parse(response);        //contains 'status' and 'message'
+    //         }
+    //     }
+    // }
 
     render() {
         return (
