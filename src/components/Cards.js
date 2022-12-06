@@ -20,6 +20,7 @@ function Cards() {
 
   const [posts,setPosts] = useState([]);
   const [open, setOpen] = React.useState(false);
+  const [filename,setFileName] = useState();
   
   // const navigate = useNavigate();
   const handleClickOpen = () => {
@@ -27,6 +28,8 @@ function Cards() {
   };
 
   const handleClose = () => {
+    document.getElementById("uploadimage").value = "";
+    setFileName("");
     setOpen(false);
   };
 
@@ -59,9 +62,15 @@ function Cards() {
 
   function sendpost(){
     //send post
+    document.getElementById("cancelBtn").disabled = true;
+    document.getElementById("postBtn").disabled = true;
+    document.getElementById("postBtn").style.backgroundColor = "grey";
     var username = localStorage.getItem("users").replaceAll('"','');
     var caption = document.getElementById("caption").value;
     // var image = document.getElementById("uploadimage").value;
+    toast('Uploading post please wait..',
+                {duration:2000}
+            );
 
     var formData = new FormData();
     formData.append("image", document.getElementById("uploadimage").files[0]);
@@ -85,6 +94,8 @@ function Cards() {
               toast.error("Something went wrong");
             }
         }
+        document.getElementById("cancelBtn").disabled = false;
+        document.getElementById("postBtn").disabled = false;
     }
   }  
   useEffect(() => {
@@ -102,11 +113,12 @@ function Cards() {
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Upload a post</DialogTitle>
           <DialogContent>
-            <input style={{ display: 'none' }} accept="image/*" id={'uploadimage'} type="file" />
+            <input style={{ display: 'none' }} accept="image/*" id={'uploadimage'} type="file" onChange={(e)=>{setFileName(e.target.value)}}/>
               <label htmlFor={'uploadimage'}>
                 <Button component="span" size="small" style={{color:'blueviolet'}}>
                   Select a photo
                 </Button>
+                <h6>{filename}</h6>
               </label>
             <TextField
               autoFocus
@@ -118,8 +130,8 @@ function Cards() {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={sendpost}>Post</Button>
+            <Button onClick={handleClose} id="cancelBtn">Cancel</Button>
+            <Button onClick={sendpost} id="postBtn">Post</Button>
           </DialogActions>
         </Dialog>
         {/* <Card accountName="rafagrassetti" image="https://picsum.photos/800/900" likedByNumber={89} caption="Hello" hours={16} /> */}
