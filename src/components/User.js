@@ -36,6 +36,8 @@ function User() {
               setProfile(response);
               if(response.type=== "public" || response.follow_status==="accepted")
                 getuserposts();
+
+              console.log("USER POST : "+userposts);
           }
       }
   }
@@ -197,7 +199,7 @@ function User() {
             </div>
         </header>
         <hr className="horiLine"/>
-        {(profile.type === "public")?(
+        {(profile.type === "public" || profile.follow_status === "accepted")?(
           (userposts.length !== 0) ? (<section className="grid">
               {
                   userposts?.map((item,index)=>(

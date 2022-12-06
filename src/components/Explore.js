@@ -58,6 +58,7 @@ function Explore() {
     }
 
     useEffect(() => {
+        document.getElementById("search").value = "";
       recommendations();
     }, []);
   return (
@@ -66,10 +67,10 @@ function Explore() {
         <NavBar/>
         <div className='expPanel'>
             <div className="explore">
-                <div className="expSearch"> 
-                    <input text="text" className="expSearchh" placeholder="Search for people" id="search" onChange={search}/>
+                {/* <div className="expSearch">  */}
+                    <input text="text" className="expSearch" placeholder="Search for people" id="search" onChange={search}/>
                     {/* <Button size="small" variant="contained" className="expSearchIcon" onClick={search}><SearchIcon color='primary'/></Button> */}
-                </div>
+                {/* </div> */}
                 {
                     searched?.map((item,index)=>(
                         <div key={index}><Profile  username={item.username} profileImagePath={item.imagePath} urlText="View" iconSize="medium" viewIcon="true"/>
