@@ -37,17 +37,23 @@ function Explore() {
         //search
         var username = localStorage.getItem("users").replaceAll('"','');
         var search = document.getElementById("search").value.trim();
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", BASE_URL + "search/", true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send("username=" + username + "&search_string=" + search);
-        xhr.onreadystatechange = function(){
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                var response = xhr.responseText;
-                console.log(response);          //response from server
-                response = JSON.parse(response);        //contains 'status' and 'message'
-                setSearched(response);
+        console.log("Search :   "+typeof(search));
+        if(search!== null && /\S/.test(search)){
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", BASE_URL + "search/", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send("username=" + username + "&search_string=" + search);
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = xhr.responseText;
+                    console.log(response);          //response from server
+                    response = JSON.parse(response);        //contains 'status' and 'message'
+                    setSearched(response);
+                }
             }
+        }
+        else{
+            setSearched([]);
         }
     }
 

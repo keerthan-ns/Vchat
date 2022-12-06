@@ -79,7 +79,7 @@ function ProfileIcon(props) {
 
     function get_image(image_pathh){
       setTimeout(()=>{
-        if(image_pathh !== undefined){
+        if(image_pathh !== undefined && image_pathh !== null){
           var username = "test2";
           // console.log("OFF no use :"+image_pathh);
           // console.log("type"+typeof(image_pathh));
