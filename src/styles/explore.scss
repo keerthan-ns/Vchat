@@ -6,6 +6,7 @@
     // width: fit-content;
     padding: 5em 2em 0 2em;
     margin: auto 0;
+    background-image: url('../images/letterBG.jpg');
 }
 .expSearch {
     margin: 0 auto;
@@ -41,6 +42,8 @@
     margin:  0 auto;
     max-height: fit-content;
     max-width:fit-content;
+    background-color: $background-grey;
+    padding: 5px 10px;
     
 
   .expTitleContainer {
