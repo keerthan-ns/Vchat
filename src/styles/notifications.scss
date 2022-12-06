@@ -3,19 +3,19 @@
 
 .notiPanel {
     // width: 320px;
-    // max-width: fit-content;
-    padding: 5em 2em 0 2em;
+    min-width: fit-content;
+    padding: 5em 1em 0 1em;
     margin: auto 0;
     // background-image: url('../images/letterBG.jpg');
   }
 .notification {
 
     // margin-top: 0.75em;
-    margin: 0 auto ;
+    margin: 0 auto;
     max-height: fit-content;
     max-width: fit-content;
     background-color: $background-grey;
-    padding: 5px 10px;
+    // padding: 5px 10px;
     
 
   .titleContainer {
@@ -30,5 +30,11 @@
     .title {
       min-width: 200px;
     }
+
+    // a {
+    //   width: 100%;
+    //   text-align: right;
+    //   color: black;
+    // }
   }
 }
