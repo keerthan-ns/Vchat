@@ -44,9 +44,9 @@ function Cards() {
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = xhr.responseText;
-            console.log(response);          //response from server
+            // console.log(response);          
             response = JSON.parse(response);  
-            console.log(response);
+            // console.log(response);
             setPosts(response);
             // posts = response;
             // console.log(posts);
@@ -55,13 +55,14 @@ function Cards() {
             //   console.log(item._id+" "+item.userId+" "+item.imagePath+" "+item.likes+" "+item.caption+" "+item.postedAt)    ,
             //   <Card key={item._id} cid={item._id} accountName={item.userId} image={item.imagePath} likedByNumber={item.likes} caption={item.caption} hours={item.postedAt} />
             // )) 
-            console.log("Done");
+            // console.log("Done");
         }
     }
   }
 
   function sendpost(){
     //send post
+    // toast.success("Working");
     document.getElementById("cancelBtn").disabled = true;
     document.getElementById("postBtn").disabled = true;
     document.getElementById("postBtn").style.backgroundColor = "grey";
@@ -83,8 +84,8 @@ function Cards() {
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = xhr.responseText;
-            response = JSON.parse(response);        //contains 'status' and 'message'
-            console.log(response);          //response from server
+            response = JSON.parse(response);        
+            console.log(response);          
             if(response.status === "success"){
               toast.success("Image posted");
               handleClose();
@@ -104,7 +105,11 @@ function Cards() {
 
   return (
     <>
-      <Toaster/>
+    <Toaster
+      position="bottom-center"
+      reverseOrder={false}
+      containerStyle={{opacity: '1'}}
+    />
       <div className="cards">
         <Stories />
         <div className="file_container"> 
@@ -115,7 +120,7 @@ function Cards() {
           <DialogContent>
             <input style={{ display: 'none' }} accept="image/*" id={'uploadimage'} type="file" onChange={(e)=>{setFileName(e.target.value)}}/>
               <label htmlFor={'uploadimage'}>
-                <Button component="span" size="small" style={{color:'blueviolet'}}>
+                <Button component="span" size="small" style={{backgroundColor:'blueviolet',color:'white'}}>
                   Select a photo
                 </Button>
                 <h6>{filename}</h6>
@@ -131,7 +136,7 @@ function Cards() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} id="cancelBtn">Cancel</Button>
-            <Button onClick={sendpost} id="postBtn">Post</Button>
+            <Button onClick={sendpost} id="postBtn" style={{backgroundColor:'purple',color:'white'}}>Post</Button>
           </DialogActions>
         </Dialog>
         {/* <Card accountName="rafagrassetti" image="https://picsum.photos/800/900" likedByNumber={89} caption="Hello" hours={16} /> */}

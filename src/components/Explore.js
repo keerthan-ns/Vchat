@@ -59,7 +59,7 @@ function Explore() {
 
     useEffect(() => {
         document.getElementById("search").value = "";
-      recommendations();
+        recommendations();
     }, []);
   return (
     <>

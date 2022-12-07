@@ -1,9 +1,9 @@
 .menu {
   display: flex;
-  padding-right: 1.5em;
+  // padding-right: 1.5em; commented lines are removed and added .menu a style
 
   .icon {
-    margin-right: 1.5em;
+    // margin-right: 1.5em;
     width: 23px;
     height: 23px;
 
@@ -20,4 +20,21 @@
       height: 35px;
     }
   }
+}
+
+.menu a{
+  margin-right: 1.5em;
+}
+
+#homeA:hover #homeC{
+  fill:red;
+}
+#messageA:hover #messageC{
+  fill:red;
+}
+#exploreA:hover #exploreC{
+  fill:red;
+}
+#notiA:hover #notiC{
+  fill:red;
 }

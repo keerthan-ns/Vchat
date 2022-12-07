@@ -7,6 +7,7 @@ import MessagePage from '../MessagePage';
 import Notifications from '../Notifications';
 import ProfilePage from '../ProfilePage';
 import User from '../User';
+import UStory from '../UStory';
 
 
 function AppRouter() {
@@ -22,6 +23,7 @@ function AppRouter() {
             <Route path="/home" element={<Home/>}/>
             <Route path="/profile" element={<ProfilePage/>}/>
             <Route path="/user/:username" element={<User/>}/>
+            <Route path="/storyOf/:username" element={<UStory/>}/>
         </Routes>
     </Router>
   )

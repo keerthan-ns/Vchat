@@ -27,14 +27,9 @@ function Notifications() {
             }
         }
     }
-    function showLoading(){
-        toast('Fetching requests please wait..',
-                {duration:3000}
-            );
-    }
 
     useEffect(() => {
-      get_follow_requests();
+        get_follow_requests();
     }, [])
     
   return (
@@ -52,7 +47,7 @@ function Notifications() {
                         <hr/>
                         </div>
                     )):(
-                        <div onLoad={showLoading}>
+                        <div>
                             <img src={noRequest} className="no_request" alt="" />
                         </div>
                     )

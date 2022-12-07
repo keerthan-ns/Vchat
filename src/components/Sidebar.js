@@ -24,7 +24,7 @@ function Sidebar() {
               // console.log(response);          //response from server
               // ***** for profile pic use get_image() function *****
               response = JSON.parse(response); 
-              console.log(response);
+              // console.log(response);
               // get_image(response.username,"profileDP",response.imagePath);
               setProfile(response.imagePath);
               // setChecked(response.type==='private' ? true : false)

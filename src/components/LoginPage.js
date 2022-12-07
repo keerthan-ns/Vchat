@@ -9,8 +9,6 @@ import playstore from '../images/play.png';
 import SignUp from './SignUp';
 import SignIN from './SignIn'
 
-const BASE_URL = process.env.REACT_APP_DJANGO_URL;
-
 class LoginPage extends Component {
     constructor(props) {
         super(props);

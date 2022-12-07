@@ -2,12 +2,18 @@ import "../styles/story.scss";
 import ProfileIcon from "./ProfileIcon";
 import users from "../data/users";
 
-function Story() {
-  let accountName = users[Math.floor(Math.random() * users.length)].username;
+function Story(props) {
 
-  if (accountName.length > 10) {
-    accountName = accountName.substring(0, 10) + "...";
-  }
+  const {
+    accountName,
+    imagePath
+  }=props;
+  
+  // let accountName = users[Math.floor(Math.random() * users.length)].username;
+
+  // if (accountName.length > 10) {
+  //   accountName = accountName.substring(0, 10) + "...";
+  // }
 
   return (
     <div className="story">
