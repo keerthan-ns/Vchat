@@ -42,29 +42,34 @@ function Menu() {
       // var image_path = document.getElementById("image_path").value;
       // console.log(uname+" "+username);
       // console.log(image_pathh);
-      if(image_pathh !== undefined){
-        var username = localStorage.getItem("users").replaceAll('"','');
-        var image_path = image_pathh;
-        var image_extension = image_pathh.split('.').pop();
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", BASE_URL + "get_image/", true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.overrideMimeType('text/plain; charset=x-user-defined');    
-        xhr.send("username=" + username + "&imagePath=" + image_path);
-        xhr.onreadystatechange = function(){
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // // var response = xhr.responseText;
-                var binary = "";
-                var responseText = xhr.responseText;
-                var responseTextLen = responseText.length;
-    
-                for (let i = 0; i < responseTextLen; i++ ) {
-                    binary += String.fromCharCode(responseText.charCodeAt(i) & 255);
-                }
-                var image_source = 'data:image/' + image_extension + ';base64,' + btoa(binary);
-                document.getElementById("menuProfile").src = image_source;
-            }
-        }
+      // if(localStorage.getItem(image_pathh)){
+      //   document.getElementById("menuProfile").src = localStorage.getItem({image_pathh});
+      // }
+      // else{
+        if(image_pathh !== undefined){
+          var username = localStorage.getItem("users").replaceAll('"','');
+          var image_path = image_pathh;
+          var image_extension = image_pathh.split('.').pop();
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", BASE_URL + "get_image/", true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.overrideMimeType('text/plain; charset=x-user-defined');    
+          xhr.send("username=" + username + "&imagePath=" + image_path);
+          xhr.onreadystatechange = function(){
+              if (xhr.readyState === 4 && xhr.status === 200) {
+                  // // var response = xhr.responseText;
+                  var binary = "";
+                  var responseText = xhr.responseText;
+                  var responseTextLen = responseText.length;
+      
+                  for (let i = 0; i < responseTextLen; i++ ) {
+                      binary += String.fromCharCode(responseText.charCodeAt(i) & 255);
+                  }
+                  var image_source = 'data:image/' + image_extension + ';base64,' + btoa(binary);
+                  document.getElementById("menuProfile").src = image_source;
+                  // localStorage.setItem(image_pathh,image_source) ;
+              }
+          }
       }
     }
     

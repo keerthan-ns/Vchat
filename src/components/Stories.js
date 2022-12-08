@@ -52,7 +52,7 @@ function Stories() {
               handleClose();
               console.log(response.message);
               toast.success(response.message);
-              // window.location.reload();
+              window.location.reload();
             }
             else{
               toast.error("Something went wrong");
@@ -110,8 +110,8 @@ useEffect(() => {
         </Dialog>
         {
             stories?.map((item)=>(
-              <a href={"storyOf/"+item.userId} className="anchorStory">
-                <Story accountName={item.userId} imagePath={item.imagePath}/>
+              <a href={"storyOf/"+item.username} className="anchorStory">
+                <Story accountName={item.username} imagePath={item.imagePath}/>
               </a>
             ))
         }

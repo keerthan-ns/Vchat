@@ -105,11 +105,7 @@ function Cards() {
 
   return (
     <>
-    <Toaster
-      position="bottom-center"
-      reverseOrder={false}
-      containerStyle={{opacity: '1'}}
-    />
+    <Toaster/>
       <div className="cards">
         <Stories />
         <div className="file_container"> 

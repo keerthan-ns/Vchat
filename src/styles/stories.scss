@@ -42,6 +42,11 @@
   color: black;
   font-size: medium;
 }
+.storyDiv{
+  margin : 0 auto;
+  max-width: fit-content;
+  max-height: fit-content;
+}
 
 // @media only screen and (max-width: 640px) {
   @media only screen and (max-width: 500px) {

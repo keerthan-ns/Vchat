@@ -17,7 +17,7 @@ function Story(props) {
 
   return (
     <div className="story">
-      <ProfileIcon iconSize="big" storyBorder={true} />
+      <ProfileIcon iconSize="big" storyBorder={true} profileImagePath={imagePath}/>
       <span className="accountName">{accountName}</span>
     </div>
   );

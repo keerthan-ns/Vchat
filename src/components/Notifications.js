@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import NavBar from './Navigation';
 import Profile from "./Profile";
 import '../styles/notifications.scss';
-import noRequest from "../images/no_requests.png"
+import noRequest from "../images/no_req.png"
 import toast,{Toaster} from 'react-hot-toast'
+import Loader from "./Loader";
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 
 function Notifications() {
 
     const [requests,setRequests] = useState([]);
+    const [loading , setLoading] = useState(true)
 
     function get_follow_requests(){
         //get follow requests
@@ -24,14 +26,29 @@ function Notifications() {
                 console.log("from req " +response);          //response from server
                 response = JSON.parse(response);        
                 setRequests(response);
+                if(response.length <= 0)
+                    document.getElementById("noReq").src = {noRequest};
+                setLoading(false)
             }
         }
     }
 
     useEffect(() => {
+        setLoading(true)
         get_follow_requests();
     }, [])
-    
+    if(loading){
+        return(<><NavBar/>
+            <div className='notiPanel'>
+                <div className="notification">
+                    <div className="titleContainer">
+                        <div className="title">Recent follow requests</div>
+                    </div> 
+                    <Loader/>
+                </div>
+            </div>
+        </>)
+    }
   return (
     <>
         <Toaster/>
@@ -48,7 +65,7 @@ function Notifications() {
                         </div>
                     )):(
                         <div>
-                            <img src={noRequest} className="no_request" alt="" />
+                            <img id="noReq" className="no_request" alt="" />
                         </div>
                     )
                 }

@@ -14,6 +14,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import noPost from "../images/no_post.png";
 import dummy from "../images/user.png";
+import Loader from "./Loader";
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 
@@ -22,6 +23,7 @@ function ProfilePage() {
     const [profile,setProfile] = useState([]);
     const [myposts,setMypost] = useState([]);
     const [open, setOpen] = React.useState(false);
+    const [loading , setLoading] = useState(true)
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -42,6 +44,7 @@ function ProfilePage() {
         }
     };
     const navigate = useNavigate();
+
     function change_to_private(){
         //change to private
         var username = localStorage.getItem("users").replaceAll('"','');
@@ -104,10 +107,10 @@ function ProfilePage() {
                 // ***** for profile pic use get_image() function *****
                 response = JSON.parse(response); 
                 console.log(response);
-                get_image(response.username,"profileDP",response.imagePath);
                 setProfile(response);
                 setChecked(response.type==='private' ? true : false)
                 getmyposts();
+                get_image(response.username,"profileDP",response.imagePath);
             }
         }
     }
@@ -245,15 +248,19 @@ function ProfilePage() {
                 response = JSON.parse(response); 
                 setMypost(response);
                 // console.log(myposts);
+                setLoading(false)
             }
         }
     }
 
-      useEffect(() => {
-        get_profile();
-        
-      },[]);
+    useEffect(() => {
+    setLoading(true)
+    get_profile();
     
+    },[]);
+    if(loading){
+    return(<><NavBar/> <Loader/></>)
+    }
     return (
         <>
             <Toaster/>
