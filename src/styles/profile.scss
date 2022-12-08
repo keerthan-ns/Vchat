@@ -1,5 +1,7 @@
 @import "./variables.scss";
 
+
+
 .profile {
   display: flex;
   align-items: center;
@@ -18,8 +20,8 @@
       margin-bottom: 5px;
 
       &:hover {
-        cursor: pointer;
-        text-decoration: underline;
+        cursor:pointer;
+        // text-decoration: underline;
       }
     }
 

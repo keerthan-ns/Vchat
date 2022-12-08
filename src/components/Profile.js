@@ -1,8 +1,6 @@
 import "../styles/profile.scss";
 import ProfileIcon from "./ProfileIcon";
-import users from "../data/users";
-import { Button,IconButton  } from "@material-ui/core";
-import View from '@material-ui/icons/Visibility';
+import { Button} from "@material-ui/core";
 import Accept from '@material-ui/icons/PersonAdd';
 import toast,{Toaster} from 'react-hot-toast';
 
@@ -11,7 +9,6 @@ function Profile(props) {
   const {
     username,
     caption,
-    urlText,
     iconSize,
     viewIcon,
     acceptIcon,
@@ -61,7 +58,7 @@ function Profile(props) {
       {(username || caption) && !hideAccountName && (
         <div className="textContainer">
           <span className="accountName">{username}</span>
-          {/* <span className={`caption ${captionSize}`}>{caption}</span> */}
+          <span className={caption} >{caption}</span>
         </div>
       )}
       {/* {(accountName || caption) && !hideAccountName && (

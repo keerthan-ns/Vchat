@@ -1,8 +1,7 @@
-
-import React from 'react';
-import "../styles/LoginPage.css";
-import toast,{Toaster} from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
+import "../styles/LoginPage.css"
+import toast,{Toaster} from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 
@@ -10,7 +9,6 @@ function SignIn() {
     const navigate = useNavigate();
     const sendLoginRequest=()=>{
         //send user name and password by post request
-        // event.currentTarget.disabled = true;
         
         document.getElementById("login_btn").disabled = true;
         document.getElementById("login_btn").style.backgroundColor = "grey";

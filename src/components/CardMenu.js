@@ -1,21 +1,19 @@
-import "../styles/cardMenu.scss";
-import { ReactComponent as Inbox } from "../images/inbox.svg";
-// import { ReactComponent as Notifications } from "../images/notifications.svg";
-import { ReactComponent as Heart } from "../images/heart.svg";
-import { ReactComponent as Liked } from "../images/liked.svg";
-import { useState } from "react";
-import toast,{Toaster} from 'react-hot-toast';
+import "../styles/cardMenu.scss"
+import { ReactComponent as Inbox } from "../images/inbox.svg"
+import { ReactComponent as Heart } from "../images/heart.svg"
+import { ReactComponent as Liked } from "../images/liked.svg"
+import { useState } from "react"
+import toast,{Toaster} from 'react-hot-toast'
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 
 function CardMenu(props) {
-  const [cid,setCid] = useState(props.cid);
+  const [cid] = useState(props.cid);
   const [liked,setLiked] =useState( props.liked);
 
     function likepost(){
       //like post
       var username = localStorage.getItem("users").replaceAll('"','');
-      // var post_id = document.getElementById("post_id").value;
       var post_id = cid;
       var xhr = new XMLHttpRequest();
       xhr.open("POST", BASE_URL + "like_post/", true);
@@ -31,7 +29,6 @@ function CardMenu(props) {
                 setLiked(true);
                 props.setParentLiked('increment');
                 toast.success(response.message);
-                // window.location.reload();
               }
               else{
                 toast.error(response.message);

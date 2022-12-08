@@ -1,43 +1,26 @@
-import React, { Component } from 'react';
-import "../styles/LoginPage.css";
-import Grid from '@material-ui/core/Grid';
-// import inst_image from '../images/9364675fb26a.svg';
-import inst_image from '../images/phone31.png';
-import insta_logo from '../images/vchatLogo.png';
-import appstore from '../images/app.png';
-import playstore from '../images/play.png';
-import SignUp from './SignUp';
+import React, { Component } from 'react'
+import "../styles/LoginPage.css"
+import Grid from '@material-ui/core/Grid'
+import inst_image from '../images/phone31.png'
+import insta_logo from '../images/vchatLogo.png'
+import appstore from '../images/app.png'
+import playstore from '../images/play.png'
+import SignUp from './SignUp'
 import SignIN from './SignIn'
 
 class LoginPage extends Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = { 
             isLogin : true
          };
     }
     changeLogin=()=>{
         if(this.state.isLogin)
-            this.setState({isLogin: false});
+            this.setState({isLogin: false})
         else    
-            this.setState({isLogin: true});
+            this.setState({isLogin: true})
     }
-
-    // sendLogoutRequest(){
-    //     //send logout request
-    //     var username = "newuser";
-    //     var xhr = new XMLHttpRequest();
-    //     xhr.open("POST", BASE_URL + "logout/", true);
-    //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    //     xhr.send("username=" + username);
-    //     xhr.onreadystatechange = function(){
-    //         if (xhr.readyState === 4 && xhr.status === 200) {
-    //             var response = xhr.responseText;
-    //             console.log(response);          //response from server
-    //             response = JSON.parse(response);        //contains 'status' and 'message'
-    //         }
-    //     }
-    // }
 
     render() {
         return (
@@ -54,7 +37,7 @@ class LoginPage extends Component {
                                     <img className="loginpage__logo" src={insta_logo} alt="Instagram"/>
                                     <div className="loginPage__signin">
                                         {
-                                            this.state.isLogin ? <SignIN/> : <SignUp/>
+                                            this.state.isLogin ? <SignIN/> : <SignUp changeParentLoginValue={this.changeLogin}/>
                                         }
 
                                         <div className="login__ordiv">
@@ -99,4 +82,4 @@ class LoginPage extends Component {
     }
 }
 
-export default LoginPage;
+export default LoginPage
