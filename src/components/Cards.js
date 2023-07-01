@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import "../styles/cards.scss";
 import Stories from "./Stories";
 import Card from "./Card";
-import uploadImage from "../images/upload1.png";
+import uploadImage from "../images/upload.png";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";

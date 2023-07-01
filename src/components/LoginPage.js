@@ -1,7 +1,7 @@
 import React, { useState,useEffect} from 'react'
 import "../styles/LoginPage.css"
 import Grid from '@material-ui/core/Grid'
-import inst_image from '../images/phone31.png'
+import inst_image from '../images/phone.png'
 import insta_logo from '../images/vchatLogo.png'
 import appstore from '../images/app.png'
 import playstore from '../images/play.png'
