@@ -18,10 +18,7 @@ function Suggestions() {
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = xhr.responseText;
-            // console.log(response);          //response from server
-            response = JSON.parse(response);        //contains 'status' and 'message'
-            // console.log("Suggestions");
-            // console.log(response);
+            response = JSON.parse(response);     
             setSuggestions(response);
         }
     }
@@ -34,7 +31,6 @@ function Suggestions() {
     <div className="suggestions">
       <div className="titleContainer">
         <div className="title">Suggestions For You</div>
-        {/* <a href="/">See All</a> */}
       </div>
       {
         suggestions?.map((item,index)=>(
@@ -43,36 +39,6 @@ function Suggestions() {
             </div>
         ))
       }
-      {/* <Profile
-        caption="Followed by mapvault + 3 more"
-        urlText="Follow"
-        iconSize="medium"
-        captionSize="small"
-      />
-      <Profile
-        caption="Followed by dadatlacak + 1 more"
-        urlText="Follow"
-        iconSize="medium"
-        captionSize="small"
-      />
-      <Profile
-        caption="Follows you"
-        urlText="Follow"
-        iconSize="medium"
-        captionSize="small"
-      />
-      <Profile
-        caption="Followed by dadatlacak + 7 more"
-        urlText="Follow"
-        iconSize="medium"
-        captionSize="small"
-      />
-      <Profile
-        caption="Followed by mapvault + 4 more"
-        urlText="Follow"
-        iconSize="medium"
-        captionSize="small"
-      /> */}
     </div>
   );
 }

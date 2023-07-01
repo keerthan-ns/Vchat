@@ -18,9 +18,6 @@ function Profile(props) {
   } = props;
 
   function accept_follow_request(uname){
-    //accept follow request
-    // console.log("Clicked me");
-    // console.log(uname);
     var username2 = uname;
     var username = localStorage.getItem("users").replaceAll('"','');
     var xhr = new XMLHttpRequest();
@@ -30,7 +27,6 @@ function Profile(props) {
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = xhr.responseText;
-            console.log(response);          
             response = JSON.parse(response);      
             if(response.status === "success"){
               toast.success("Follow request accepted");
@@ -52,7 +48,6 @@ function Profile(props) {
       <ProfileIcon
         iconSize={iconSize}
         storyBorder={storyBorder}
-        // image={get_profile()}
         profileImagePath={profileImagePath}
       />
       {(username || caption) && !hideAccountName && (
@@ -61,23 +56,12 @@ function Profile(props) {
           <span className={caption} >{caption}</span>
         </div>
       )}
-      {/* {(accountName || caption) && !hideAccountName && (
-        <div className="textContainer">
-          <span className="accountName">{accountName}</span>
-        </div>
-      )} */}
-      {/* <a href={"user/"+username} >{urlText}</a> */}
       {viewIcon ?
         (<Button href={"user/"+username} size="small" variant="contained" color="primary" style={{'max-width':'30px'}}>View</Button>):(null)
       }
       {acceptIcon ?
         (<Button id={username} onClick={()=>accept_follow_request(username)} size="small" color="primary"><Accept/></Button>):(null)
       }
-      {/* {viewIcons ?
-        (<Button href={"user/Addfriend"} size="small" color="primary"><Accept/></Button>):(null)
-      } */}
-      
-      
     </div>
   );
 }

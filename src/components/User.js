@@ -6,7 +6,6 @@ import "../styles/UserPage.css";
 import "../styles/ProfilePage.scss";
 import noPost from "../images/no_post.png";
 import accPrivate from "../images/acc_private.png";
-import { Button} from "@material-ui/core";
 import dummy from "../images/user.png";
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
@@ -27,17 +26,12 @@ function User() {
       xhr.onreadystatechange = function(){
           if (xhr.readyState === 4 && xhr.status === 200) {
               var response = xhr.responseText;
-              // console.log(response);          //response from server
               // ***** for profile pic use get_image() function *****
               response = JSON.parse(response); 
-              console.log("USER INFORMATION");
-              console.log(response);
               get_image(response.username,"profileDP",response.imagePath);
               setProfile(response);
               if(response.type=== "public" || response.follow_status==="accepted")
                 getuserposts();
-
-              console.log("USER POST : "+userposts);
           }
       }
   }
@@ -52,11 +46,9 @@ function User() {
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = xhr.responseText;
-            console.log(response);          //response from server
             // ****** for getting image use get_image function ******
             response = JSON.parse(response); 
             setUserPosts(response);
-            // console.log(myposts);
         }
     }
   }
@@ -64,10 +56,6 @@ function User() {
   function get_image(uname,cid,image_pathh){
       //get image
       var usern = username;
-      // var username = "test2";
-      // var image_path = document.getElementById("image_path").value;
-      // console.log(uname+" "+username);
-      console.log(image_pathh);
       if(image_pathh !== undefined){
         var image_path = image_pathh;
         var image_extension = image_pathh.split('.').pop();
@@ -87,12 +75,7 @@ function User() {
                     binary += String.fromCharCode(responseText.charCodeAt(i) & 255);
                 }
                 var image_source = 'data:image/' + image_extension + ';base64,' + btoa(binary);
-    
-                // console.log(image_source);          //response from server
-                document.getElementById(cid).src = image_source;       //for displaying image
-                
-                // return image_source;
-    
+                document.getElementById(cid).src = image_source;        
             }
         }
       }
@@ -109,7 +92,6 @@ function User() {
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = xhr.responseText;
-            console.log(response);          //response from server
             response = JSON.parse(response);        //contains 'status' and 'message'
             if(response.status === "success"){
               toast.success("Unfollow completed");  
@@ -135,7 +117,6 @@ function User() {
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = xhr.responseText;
-            console.log(response);          //response from server
             response = JSON.parse(response);        //contains 'status' and 'message'
             if(response.status === "success"){
               toast.success("Follow request sent");  
@@ -152,7 +133,7 @@ function User() {
 
   useEffect(() => {
     get_userProfile(); 
-  },[]);
+  });
 
   return (
     <>
@@ -219,11 +200,9 @@ function User() {
         ):null}
         {(profile.type === "private" && (profile.follow_status === "rejected" || profile.follow_status === "follow request not sent"  || profile.follow_status === "unfollowed" || profile.follow_status === "pending") )?(
                 <section className="nopost">
-                  {/* <div className='nopost__nophoto'/> */}
                   <img src={accPrivate} className='nopost__nophoto' alt="" />
-                  {/* <div className='nopost__nophoto'/> */}
                 </section>
-            ):null}
+        ):null}
     </>
   )
 }

@@ -9,12 +9,7 @@ body {
     min-height: 100vh;
     background-color: #fafafa;
     color: #262626;
-    /* padding-bottom: 3rem; */
 }
-
-/* img {
-    display: block;
-} */
 .gallery {
     display: grid;
     margin-left: 30px;
@@ -230,18 +225,6 @@ body {
     background-color: #2766ed;
 }
 
-/* Loader */
-
-/* .loader {
-    width: 5rem;
-    height: 5rem;
-    border: 0.6rem solid #999;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    margin: 0 auto;
-    animation: loader 500ms linear infinite;
-} */
-
 /* Media Query */
 
 /* @media screen and (max-width: 40rem) { */
@@ -330,15 +313,6 @@ body {
         display: block;
     }
 }
-
-/* Spinner Animation */
-
-/* @keyframes loader {
-    to {
-        transform: rotate(360deg);
-    }
-} */
-
 /*
 
 The following code will only run if your browser supports CSS grid.

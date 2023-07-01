@@ -21,7 +21,6 @@ function SignIn() {
         xhr.onreadystatechange = function(){
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
-                console.log(response);          //response from server
                 response = JSON.parse(response);        //contains 'status' and 'message'
                 if(response.status === "success"){
                     toast.success(response.message);

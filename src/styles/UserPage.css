@@ -9,12 +9,8 @@ body {
     min-height: 100vh;
     background-color: #fafafa;
     color: #262626;
-    /* padding-bottom: 3rem; */
 }
 
-/* img {
-    display: block;
-} */
 .gallery {
     display: grid;
     margin-left: 30px;
@@ -101,7 +97,6 @@ body {
 .User_profile-bio {
     float: left;
     width: calc(66.666% - 2rem);
-    /* width: calc(100% - 2rem); */
 }
 
 .User_profile-user-settings {
@@ -120,7 +115,6 @@ body {
     border: 0.1rem solid #2766ed;
     border-radius: 0.3rem;
     padding: 0 2.4rem;
-    /* margin-left: 2rem; */
 }
 
 .User_profile-logout-btn {

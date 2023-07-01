@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
 import "../styles/cards.scss";
 import Stories from "./Stories";
 import Card from "./Card";
@@ -22,7 +21,6 @@ function Cards() {
   const [open, setOpen] = React.useState(false);
   const [filename,setFileName] = useState();
   
-  // const navigate = useNavigate();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -36,39 +34,26 @@ function Cards() {
   function getPosts(){
     //get all posts
     var username = localStorage.getItem("users").replaceAll('"','');
-    // console.log(username);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", BASE_URL + "fetch_posts/", true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send("username=" + username);
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4 && xhr.status === 200) {
-            var response = xhr.responseText;
-            // console.log(response);          
-            response = JSON.parse(response);  
-            // console.log(response);
+            var response = xhr.responseText; 
+            response = JSON.parse(response); 
             setPosts(response);
-            // posts = response;
-            // console.log(posts);
-            // console.log(typeof posts);
-            // posts?.map((item,index)=>(
-            //   console.log(item._id+" "+item.userId+" "+item.imagePath+" "+item.likes+" "+item.caption+" "+item.postedAt)    ,
-            //   <Card key={item._id} cid={item._id} accountName={item.userId} image={item.imagePath} likedByNumber={item.likes} caption={item.caption} hours={item.postedAt} />
-            // )) 
-            // console.log("Done");
         }
     }
   }
 
   function sendpost(){
     //send post
-    // toast.success("Working");
     document.getElementById("cancelBtn").disabled = true;
     document.getElementById("postBtn").disabled = true;
     document.getElementById("postBtn").style.backgroundColor = "grey";
     var username = localStorage.getItem("users").replaceAll('"','');
     var caption = document.getElementById("caption").value;
-    // var image = document.getElementById("uploadimage").value;
     toast('Uploading post please wait..',
                 {duration:2000}
             );
@@ -84,8 +69,7 @@ function Cards() {
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = xhr.responseText;
-            response = JSON.parse(response);        
-            console.log(response);          
+            response = JSON.parse(response);    
             if(response.status === "success"){
               toast.success("Image posted");
               handleClose();
@@ -135,18 +119,11 @@ function Cards() {
             <Button onClick={sendpost} id="postBtn" style={{backgroundColor:'purple',color:'white'}}>Post</Button>
           </DialogActions>
         </Dialog>
-        {/* <Card accountName="rafagrassetti" image="https://picsum.photos/800/900" likedByNumber={89} caption="Hello" hours={16} /> */}
         {
             posts?.map((item)=>(
               <Card key={(item._id).toString()} cid={item._id} accountName={item.userId} image={item.imagePath} liked={item.liked} likedByNumber={item.likes} caption={item.caption} hours={item.postedAt} profileImagePath={item.profileImagePath}/>
             ))
         }
-        {/* {console.log(posts)} */}
-        {/* {
-            useState.posts.forEach(item =>
-              console.log(item._id+" "+item.userId+" "+item.imagePath+" "+item.likes+" "+item.caption+" "+item.postedAt)
-            )
-        } */}
       </div>
     </>
   );

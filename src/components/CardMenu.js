@@ -22,10 +22,8 @@ function CardMenu(props) {
       xhr.onreadystatechange = function(){
           if (xhr.readyState === 4 && xhr.status === 200) {
               var response = xhr.responseText;
-              console.log(response);          //response from server
               response = JSON.parse(response);        //contains 'status' and 'message'
               if(response.status === "success"){
-                // toast.success("You liked the post");
                 setLiked(true);
                 props.setParentLiked('increment');
                 toast.success(response.message);
@@ -48,7 +46,6 @@ function CardMenu(props) {
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = xhr.responseText;
-            console.log(response);          //response from server
             response = JSON.parse(response);        //contains 'status' and 'message'
             if(response.status === "success"){
               setLiked(false);
@@ -67,8 +64,7 @@ function CardMenu(props) {
     <div className="cardMenu">
       <Toaster/>
       <div className="interactions">
-      {liked ? <Liked className="icon heart" onClick={unlikepost}/> : <Heart className="icon heart" onClick={likepost}/>}
-        {/* <Heart className="icon heart" onClick={likepost}/> */}
+        {liked ? <Liked className="icon heart" onClick={unlikepost}/> : <Heart className="icon heart" onClick={likepost}/>}
         <Inbox className="icon" />
       </div>
     </div>

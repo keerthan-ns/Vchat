@@ -21,8 +21,7 @@ function Notifications() {
         xhr.send("username=" + username);
         xhr.onreadystatechange = function(){
             if (xhr.readyState === 4 && xhr.status === 200) {
-                var response = xhr.responseText;
-                console.log("from req " +response);          //response from server
+                var response = xhr.responseText;   //response from server
                 response = JSON.parse(response);        
                 setRequests(response);
                 if(response.length <= 0)
@@ -67,38 +66,6 @@ function Notifications() {
                         </div>
                     )
                 }
-                    {/* <Card key={(item._id).toString()} cid={item._id} accountName={item.userId} image={item.imagePath} liked={item.liked} likedByNumber={item.likes} caption={item.caption} hours={item.postedAt} profileImagePath={item.profileImagePath}/> */}
-                {/* <Profile
-                    username="Thor"
-                    caption="Followed by mapvault + 3 more"
-                    urlText="Follow"
-                    iconSize="medium"
-                    captionSize="small"
-                />
-                <Profile
-                    caption="Followed by dadatlacak + 1 more"
-                    urlText="Follow"
-                    iconSize="medium"
-                    captionSize="small"
-                />
-                <Profile
-                    caption="Follows you"
-                    urlText="Follow"
-                    iconSize="medium"
-                    captionSize="small"
-                />
-                <Profile
-                    caption="Followed by dadatlacak + 7 more"
-                    urlText="Follow"
-                    iconSize="medium"
-                    captionSize="small"
-                />
-                <Profile
-                    caption="Followed by mapvault + 4 more"
-                    urlText="Follow"
-                    iconSize="medium"
-                    captionSize="small"
-                /> */}
             </div>
         </div>
     </>

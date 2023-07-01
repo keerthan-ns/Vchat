@@ -1,11 +1,8 @@
 import NavBar from './Navigation'
 import '../styles/explore.scss'
-import searchIcon from '../images/searchIcon.png'
-import { Button} from "@material-ui/core"
-import SearchIcon from '@material-ui/icons/Search'
 import React, { useEffect, useState } from "react"
 import Profile from "./Profile"
-import toast, { Toaster } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 
@@ -24,10 +21,7 @@ function Explore() {
       xhr.onreadystatechange = function(){
           if (xhr.readyState === 4 && xhr.status === 200) {
               var response = xhr.responseText;
-              console.log(response);          //response from server
-              response = JSON.parse(response);        //contains 'status' and 'message'
-              console.log("Suggestions");
-              console.log(response);
+              response = JSON.parse(response); 
               setSuggestions(response);
           }
       }
@@ -37,7 +31,6 @@ function Explore() {
         //search
         var username = localStorage.getItem("users").replaceAll('"','');
         var search = document.getElementById("search").value.trim();
-        console.log("Search :   "+typeof(search));
         if(search!== null && /\S/.test(search)){
             var xhr = new XMLHttpRequest();
             xhr.open("POST", BASE_URL + "search/", true);
@@ -46,7 +39,6 @@ function Explore() {
             xhr.onreadystatechange = function(){
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var response = xhr.responseText;
-                    console.log(response);          //response from server
                     response = JSON.parse(response);        //contains 'status' and 'message'
                     setSearched(response);
                 }
@@ -67,10 +59,7 @@ function Explore() {
         <NavBar/>
         <div className='expPanel'>
             <div className="explore">
-                {/* <div className="expSearch">  */}
-                    <input text="text" className="expSearch" placeholder="Search for people" id="search" onChange={search}/>
-                    {/* <Button size="small" variant="contained" className="expSearchIcon" onClick={search}><SearchIcon color='primary'/></Button> */}
-                {/* </div> */}
+                <input text="text" className="expSearch" placeholder="Search for people" id="search" onChange={search}/>
                 {
                     searched?.map((item,index)=>(
                         <div key={index}><Profile  username={item.username} profileImagePath={item.imagePath} urlText="View" iconSize="medium" viewIcon="true"/>

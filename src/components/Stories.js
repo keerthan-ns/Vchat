@@ -7,9 +7,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import React, { useEffect, useState } from "react";
-// import toast,{Toaster} from 'react-hot-toast';
 import toast from 'react-hot-toast';
-// import HorizontalScroll from "react-horizontal-scrolling";
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 
@@ -45,11 +43,9 @@ function Stories() {
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = xhr.responseText;
-            response = JSON.parse(response);        //contains 'status' and 'message'
-            console.log(response);          //response from server
+            response = JSON.parse(response);
             if(response.status === "success"){
               handleClose();
-              console.log(response.message);
               toast.success(response.message);
               window.location.reload();
             }
@@ -71,7 +67,6 @@ function Stories() {
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = xhr.responseText;
-            console.log("STORIES LIST : "+response);          //response from server
             response = JSON.parse(response);        //contains 'status' and 'message'
             setStories(response);
         }
@@ -86,10 +81,7 @@ useEffect(() => {
     <>
       <div className="stories">
         <div className="fileupload">
-            {/* <label htmlFor="file-upload-status" > */}
-                <img className="statusbar__upload" src={uploadimage} width="55px" height="55px" onClick={handleClickOpenS} alt="" />
-            {/* </label>
-                <input id="file-upload-status" type="file"/> */}
+          <img className="statusbar__upload" src={uploadimage} width="55px" height="55px" onClick={handleClickOpenS} alt="" />
         </div>
         <Dialog open={openS} onClose={handleClose}>
           <DialogTitle>Share your story</DialogTitle>
@@ -114,22 +106,6 @@ useEffect(() => {
               </a>
             ))
         }
-        {/* <Story />
-        <Story />
-        <Story />
-        <Story />
-        <Story />
-        <Story />
-        <Story />
-        <Story />
-        <Story />
-        <Story />
-        <Story />
-        <Story />
-        <Story />
-        <Story />
-        <Story />
-        <Story /> */}
       </div>
     </>
   );

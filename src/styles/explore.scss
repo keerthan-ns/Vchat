@@ -2,20 +2,15 @@
 
 
 .expPanel {
-    // width: 320px;
-    // width: fit-content;
     padding: 5em 2em 0 2em;
     margin: auto 0;
     background-image: url('../images/letterBG.jpg');
-    // filter: blur(2px);
-    
 }
 .expSearch {
     margin: 0 auto;
     border: 1px solid $border-color-grey;
     border-radius: 3px;
     background-color: $background-grey;
-    // max-width: fit-content;
     width: 80%;;
     min-height: 30px;
     display: flex;
@@ -34,14 +29,8 @@
         min-height: 30px; 
         padding-left: 10px;
     }
-    // .expSearchIcon {
-    //     width: fit-content;
-    //     max-height: 30px;
-    // }
 }
 .explore {
-
-    // margin-top: 0.75em;
     margin:  0 auto;
     max-height: fit-content;
     max-width:fit-content;

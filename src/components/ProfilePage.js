@@ -54,8 +54,7 @@ function ProfilePage() {
         xhr.send("username=" + username);
         xhr.onreadystatechange = function(){
             if (xhr.readyState === 4 && xhr.status === 200) {
-                var response = xhr.responseText;
-                console.log(response);          //response from server
+                var response = xhr.responseText;//response from server
                 response = JSON.parse(response);        
                 if(response.status === "success"){
                     profile.type = 'private';
@@ -78,8 +77,7 @@ function ProfilePage() {
         xhr.send("username=" + username);
         xhr.onreadystatechange = function(){
             if (xhr.readyState === 4 && xhr.status === 200) {
-                var response = xhr.responseText;
-                console.log(response);          //response from server
+                var response = xhr.responseText; //response from server
                 response = JSON.parse(response); 
                 if(response.status === "success"){
                     profile.type = 'public';
@@ -103,10 +101,7 @@ function ProfilePage() {
         xhr.onreadystatechange = function(){
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
-                // console.log(response);          //response from server
-                // ***** for profile pic use get_image() function *****
-                response = JSON.parse(response); 
-                console.log(response);
+                response = JSON.parse(response);
                 setProfile(response);
                 setChecked(response.type==='private' ? true : false)
                 getmyposts();
@@ -118,7 +113,6 @@ function ProfilePage() {
     function get_image(uname,cid,image_pathh){
         //get image
         var username = localStorage.getItem("users").replaceAll('"','');
-        console.log(image_pathh);
         if(image_pathh !== undefined){
             var image_path = image_pathh;
             var image_extension = image_pathh.split('.').pop();
@@ -129,7 +123,6 @@ function ProfilePage() {
             xhr.send("username=" + username + "&imagePath=" + image_path);
             xhr.onreadystatechange = function(){
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    // // var response = xhr.responseText;
                     var binary = "";
                     var responseText = xhr.responseText;
                     var responseTextLen = responseText.length;
@@ -138,12 +131,7 @@ function ProfilePage() {
                         binary += String.fromCharCode(responseText.charCodeAt(i) & 255);
                     }
                     var image_source = 'data:image/' + image_extension + ';base64,' + btoa(binary);
-        
-                    // console.log(image_source);          //response from server
-                    document.getElementById(cid).src = image_source;       //for displaying image
-                    
-                    // return image_source;
-        
+                    document.getElementById(cid).src = image_source;         
                 }
             }
         }
@@ -151,20 +139,14 @@ function ProfilePage() {
 
     const sendLogoutRequest=()=>{
         //send logout request
-        //   var username = document.getElementById("username").value;
           var username = localStorage.getItem("users").replaceAll('"','');
-        //   var username = "test2";
-        //   var username = uname.toString;
-        //   console.log(typeof username);
           var xhr = new XMLHttpRequest();
           xhr.open("POST", BASE_URL + "logout/", true);
           xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        //   console.log("username=" + username); 
           xhr.send("username=" + username);
           xhr.onreadystatechange = function(){
               if (xhr.readyState === 4 && xhr.status === 200) {
                   var response = xhr.responseText;
-                  console.log(response);          //response from server
                   response = JSON.parse(response);
                   if(response.status === "success"){
                       localStorage.clear();
@@ -190,13 +172,11 @@ function ProfilePage() {
         xhr.onreadystatechange = function(){
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
-                console.log(response);          //response from server
                 response = JSON.parse(response);        //contains 'status' and 'message'
                 if(response.status === "success"){
                     toast.success("Bio updated successfully");
                     profile.bio = bio;
                     handleClose();
-                    // navigate('/profile');
                 }
                 else{
                     toast.error("Failed to update");
@@ -217,14 +197,10 @@ function ProfilePage() {
         xhr.onreadystatechange = function(){
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
-                console.log(response);          //response from server
                 response = JSON.parse(response); 
                 if(response.status === "success"){
                     toast.success("DP updated successfully");
                     window.location.reload();
-                    // setProfile(prevState => ({ profile: prevState.profile.map(el => (
-                    //     el.document.getElementById('profileid').value ===? { ...el,imagePath } : el)) 
-                    // }))
                 }
                 else{
                     toast.error("Failed to update");
@@ -243,11 +219,9 @@ function ProfilePage() {
         xhr.onreadystatechange = function(){
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
-                console.log(response);          //response from server
                 // ****** for getting image use get_image function ******
                 response = JSON.parse(response); 
                 setMypost(response);
-                // console.log(myposts);
                 setLoading(false)
             }
         }
@@ -256,7 +230,6 @@ function ProfilePage() {
     useEffect(() => {
     setLoading(true)
     get_profile();
-    
     },[]);
     if(loading){
     return(<><NavBar/> <Loader/></>)
@@ -287,7 +260,6 @@ function ProfilePage() {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    {/* <Button onClick={sendpost}>Update</Button> */}
                 </DialogActions>
             </Dialog>
                 <header>
@@ -300,7 +272,6 @@ function ProfilePage() {
                             <div className="Profile_profile-user-settings">
                                 <h1 className="Profile_profile-user-name">{profile.username}</h1>
                                 <button className="Profile_btn Profile_profile-edit-btn" onClick={handleClickOpen}>Edit Profile</button>
-                                {/* <a href="https://www.flaticon.com/free-icons/logout" title="logout icons">Logout icons created by Pixel perfect - Flaticon</a> */}
                                 <button className="Profile_btn Profile_profile-logout-btn" onClick={sendLogoutRequest} alt="Logout" ></button>
                             </div>
                             <div className="Profile_profile-stats">
@@ -329,87 +300,6 @@ function ProfilePage() {
                         <img src={noPost} className='nopost__nophoto' alt="" />
                     </section>)
                 }
-                    {/* <div>
-                        <img src='https://images.unsplash.com/photo-1548032885-b5e38734688a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1501426026826-31c667bdf23d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1507041957456-9c397ce39c97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1519821172144-4f87d85de2a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1509233725247-49e657c54213?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1520454974749-611b7248ffdb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1414609245224-afa02bfb3fda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1504681869696-d977211a5f4c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1522083165195-3424ed129620?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1470219556762-1771e7f9427d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1523374228107-6e44bd2b524e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1516893842880-5d8aada7ac05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1505761671935-60b3a7427bad?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1539108826694-1297410cdda9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1529690982439-df5e60eb5a3f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1491056792553-4704d261e3ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1562138888-3d0a63b21dcf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1568641134257-ab85695f67e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1545385095-f5a14a9160d1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1547462713-a208daf9d997?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>
-                    <div>
-                        <img src='https://images.unsplash.com/photo-1522586217274-9096ee38a805?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' className='grid__photo' alt=""/>
-                    </div>    */}
         </>
     )
 }

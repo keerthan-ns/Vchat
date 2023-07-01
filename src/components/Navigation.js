@@ -11,11 +11,7 @@ function Navigation() {
       <div className="navigation">
         <div className="container">
           <img className="logo" src={logo} alt="instagram logo" />
-          {/* <div className="search"> */}
           <input text="text" className="search" placeholder="Search" />
-            {/* <img className="searchIcon" src={searchIcon} alt="search icon" />
-            <span className="searchText">Search</span> */}
-          {/* </div> */}
           <Menu />
         </div>
       </div>

@@ -13,7 +13,6 @@ import UStory from '../UStory';
 function AppRouter() {
   return (
     <Router>
-      {/* <NavBar/> */}
         <Routes>
             <Route path="/" element={<LoginPage/>}/>
             <Route path="/login" element={<LoginPage/>}/>
