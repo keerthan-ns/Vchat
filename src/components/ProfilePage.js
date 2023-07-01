@@ -180,29 +180,29 @@ function ProfilePage() {
     }
 
     function update_bio(){
-    //update bio
-    var username = localStorage.getItem("users").replaceAll('"','');
-    var bio = document.getElementById("bio").value;
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", BASE_URL + "update_bio/", true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send("username=" + username + "&bio=" + bio);
-    xhr.onreadystatechange = function(){
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var response = xhr.responseText;
-            console.log(response);          //response from server
-            response = JSON.parse(response);        //contains 'status' and 'message'
-            if(response.status === "success"){
-                toast.success("Bio updated successfully");
-                profile.bio = bio;
-                handleClose();
-                // navigate('/profile');
-            }
-            else{
-                toast.error("Failed to update");
+        //update bio
+        var username = localStorage.getItem("users").replaceAll('"','');
+        var bio = document.getElementById("bio").value;
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", BASE_URL + "update_bio/", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send("username=" + username + "&bio=" + bio);
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                console.log(response);          //response from server
+                response = JSON.parse(response);        //contains 'status' and 'message'
+                if(response.status === "success"){
+                    toast.success("Bio updated successfully");
+                    profile.bio = bio;
+                    handleClose();
+                    // navigate('/profile');
+                }
+                else{
+                    toast.error("Failed to update");
+                }
             }
         }
-    }
     }
 
     function update_profile_pic(){

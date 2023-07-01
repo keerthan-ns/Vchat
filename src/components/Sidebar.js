@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../styles/sidebar.scss";
 import Sticky from "react-sticky-el";
 import Profile from "./Profile";
@@ -9,35 +9,6 @@ import Footer from "./Footer";
 // const BASE_URL = process.env.REACT_APP_DJANGO_URL;
 
 function Sidebar() {
-
-  // const [profileImagePath,setProfile] = useState();
-  // function get_profile(){
-  //   //get profile
-  //     var username = localStorage.getItem("users").replaceAll('"','');
-  //     var xhr = new XMLHttpRequest();
-  //     xhr.open("POST", BASE_URL + "fetch_profile/", true);
-  //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  //     xhr.send("username=" + username);
-  //     xhr.onreadystatechange = function(){
-  //         if (xhr.readyState === 4 && xhr.status === 200) {
-  //             var response = xhr.responseText;
-  //             // console.log(response);          //response from server
-  //             // ***** for profile pic use get_image() function *****
-  //             response = JSON.parse(response); 
-  //             // console.log(response);
-  //             // get_image(response.username,"profileDP",response.imagePath);
-  //             setProfile(response.imagePath);
-  //             // setChecked(response.type==='private' ? true : false)
-  //             // getmyposts();
-  //         }
-  //     }
-  // }
-
-  useEffect(() => {
-    // get_profile();
-  }, [])
-  
-
   return (
     <Sticky topOffset={-80}>
       <div className="sidebar">

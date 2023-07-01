@@ -3,7 +3,6 @@ import NavBar from './Navigation';
 import Profile from "./Profile";
 import '../styles/notifications.scss';
 import noRequest from "../images/no_req.png"
-import toast,{Toaster} from 'react-hot-toast'
 import Loader from "./Loader";
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
@@ -51,7 +50,6 @@ function Notifications() {
     }
   return (
     <>
-        <Toaster/>
         <NavBar/>
         <div className='notiPanel'>
             <div className="notification">

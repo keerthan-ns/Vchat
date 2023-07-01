@@ -2,14 +2,13 @@ import "../styles/stories.scss";
 import Story from "./Story";
 import uploadimage from "../images/statusadd.png";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import React, { useEffect, useState } from "react";
 // import toast,{Toaster} from 'react-hot-toast';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 // import HorizontalScroll from "react-horizontal-scrolling";
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
@@ -110,7 +109,7 @@ useEffect(() => {
         </Dialog>
         {
             stories?.map((item)=>(
-              <a href={"storyOf/"+item.username} className="anchorStory">
+              <a key={item.username} href={"storyOf/"+item.username} className="anchorStory">
                 <Story accountName={item.username} imagePath={item.imagePath}/>
               </a>
             ))

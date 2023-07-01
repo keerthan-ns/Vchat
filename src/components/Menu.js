@@ -5,7 +5,6 @@ import { ReactComponent as Inbox } from "../images/inbox.svg";
 import { ReactComponent as Explore } from "../images/explore.svg";
 import { ReactComponent as Notifications } from "../images/notifications.svg";
 import ProfileIcon from "./ProfileIcon";
-import image from "../images/profile.jpg";
 import dummy from "../images/user.png";
 
 const BASE_URL = process.env.REACT_APP_DJANGO_URL;
