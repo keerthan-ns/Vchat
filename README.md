@@ -20,4 +20,5 @@ Vchat is a social media application inspired by Instagram. It allows users to sh
 
 ### Contributors
  [Shailesh Kumar](https://github.com/code-legand) 
+ [Gautham](https://github.com/Gauthambhandary)
  
