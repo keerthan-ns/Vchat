@@ -19,6 +19,6 @@ Vchat is a social media application inspired by Instagram. It allows users to sh
 - MongoDB: A scalable and flexible NoSQL database used for data storage and retrieval.
 
 ### Contributors
- [Shailesh Kumar](https://github.com/code-legand) 
- [Gautham](https://github.com/Gauthambhandary)
+- [Shailesh Kumar](https://github.com/code-legand) 
+- [Gautham](https://github.com/Gauthambhandary)
  
