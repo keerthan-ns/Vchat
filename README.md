@@ -1,7 +1,7 @@
 ## Backend code is available here in [this repository](https://github.com/code-legand/instagram)
 
 # Vchat - Instagram Clone
-<img src="https://res.cloudinary.com/dg7etzwks/image/upload/v1683852442/portfolioProjects/wxp6qwy2qw9beyygziog.png" alt="Vchat Output" style="height: 350px; width: auto;" />
+<img src="https://res.cloudinary.com/dg7etzwks/image/upload/v1683852442/portfolioProjects/wxp6qwy2qw9beyygziog.png" alt="Vchat Output" style="height: auto; width: 670px;" />
 
 Vchat is a social media application inspired by Instagram. It allows users to share their photos, connect with friends, and explore content from other users. This project is built using React.js for the frontend, CSS and SCSS for styling, and Django for the backend.
 
